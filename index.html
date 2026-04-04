@@ -61,7 +61,26 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--hh);backgrou
 .menubtn.active span:nth-child(1){transform:translateY(6px) rotate(45deg);}
 .menubtn.active span:nth-child(2){opacity:0;}
 .menubtn.active span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
-#themeBtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--border2);background:rgba(255,255,255,0.05);cursor:pointer;font-size:16px;transition:all var(--t2);touch-action: manipulation;}
+
+
+
+#themeBtn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid var(--border2);
+  background:rgba(255,255,255,0.1);
+  cursor:pointer;
+  font-size:18px;
+  transition:all var(--t2);
+  touch-action: manipulation;
+  color: #D4AF37;
+}
+
+
 #themeBtn:hover{background:var(--gold-subtle);border-color:var(--gold);transform:scale(1.1) rotate(20deg);box-shadow:var(--shadow-gold);}
 .layout{display:flex;margin-top:var(--hh);min-height:calc(100vh - var(--hh));}
 aside{width:var(--sw);background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:var(--hh);left:0;bottom:0;overflow-y:auto;transition:transform var(--t3);z-index:50;box-shadow:2px 0 20px rgba(0,0,0,0.3);-webkit-overflow-scrolling: touch;}
@@ -478,7 +497,18 @@ document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '
 }
 }
 /* ── THEME ───────────────────────────────────────────── */
-function toggleTheme(){var isLight=document.body.classList.toggle('light');var btn=document.getElementById('themeBtn');if(btn)btn.textContent=isLight?'☀️':'';try{localStorage.setItem('ici_theme',isLight?'light':'dark');}catch(e){}}
+
+function toggleTheme(){
+  var isLight=document.body.classList.toggle('light');
+  var btn=document.getElementById('themeBtn');
+  if(btn){
+    btn.textContent=isLight?'☀️':'🌙';
+    btn.style.color=isLight?'#D4AF37':'#F4E5C2';
+  }
+  try{localStorage.setItem('ici_theme',isLight?'light':'dark');}catch(e){}
+}
+
+
 /* ── PWA ──────────────────────────────────────────────── */
 var deferredPrompt=null,installBanner=document.getElementById('installBanner');
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(installBanner)setTimeout(function(){installBanner.classList.add('show');},3000);});
@@ -739,6 +769,7 @@ var PP = [
 </script>
 </body>
 </html>
+
 
 
 
