@@ -253,6 +253,32 @@ body.light .modal-header{background:#FFFFFF;}
 
 .reading-progress{position:fixed;top:var(--hh);left:0;height:3px;background:var(--gold);width:0%;z-index:99;transition:width 0.1s ease;}
 
+/* ═══════════════════════════════════════════════════════ BOTÓN DE BÚSQUEDA ═══════════════════════════════════════════════════════ */
+#searchBtn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid var(--border2);
+background:rgba(255,255,255,0.05);
+cursor:pointer;
+font-size:16px;
+color:var(--cream);
+transition:all var(--t2);
+margin-right:10px;
+}
+
+#searchBtn:hover{
+background:var(--gold-subtle);
+border-color:var(--gold);
+color:var(--gold);
+transform:scale(1.1);
+}
+
+
+
 </style>
 
 
@@ -273,12 +299,34 @@ body.light .modal-header{background:#FFFFFF;}
 <div class="htitle">Principios Básicos</div>
 </div>
 </div>
+
+<button id="searchBtn" onclick="toggleSearch()" aria-label="Buscar" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--border2);background:rgba(255,255,255,0.05);cursor:pointer;font-size:16px;color:var(--cream);transition:all var(--t2);margin-right:10px;">🔍</button>
+
 <button id="themeBtn" onclick="toggleTheme()" aria-label="Cambiar modo">🌙</button>
 <div class="hprog">
 <span class="hprog-lbl" id="hLbl">0 / 10</span>
 <div class="hprog-bar"><div class="hprog-fill" id="hFill"></div></div>
 </div>
+
+
 </header>
+
+<!-- ✅ BARRA DE BÚSQUEDA (AGREGAR ESTO): -->
+<div id="searchBar" style="display:none;position:fixed;top:var(--hh);left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:16px 20px;z-index:99;box-shadow:var(--shadow-md);">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span style="font-size:18px;">🔍</span>
+    <input type="text" id="searchInput" placeholder="Buscar versículo, principio, tema o palabra..." style="flex:1;padding:12px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--cream);font-size:16px;outline:none;" onkeyup="searchContent()">
+    <button onclick="toggleSearch()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:8px;">✕</button>
+  </div>
+  <div id="searchResults" style="margin-top:16px;max-height:400px;overflow-y:auto;"></div>
+</div>
+
+
+
+
+
+
+
 <div class="overlay" id="overlay" onclick="toggleSB()"></div>
 <div class="layout">
 <aside id="sidebar">
@@ -833,6 +881,109 @@ var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
 var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 var scrolled = (winScroll / height) * 100;
 document.getElementById('readProgress').style.width = scrolled + '%';
+});
+
+
+/* ═══════════════════════════════════════════════════════ BUSCADOR PROFESIONAL ═══════════════════════════════════════════════════════ */
+function toggleSearch() {
+var bar = document.getElementById('searchBar');
+bar.style.display = bar.style.display === 'none' ? 'block' : 'none';
+if (bar.style.display === 'block') {
+setTimeout(() => document.getElementById('searchInput').focus(), 100);
+document.getElementById('searchResults').innerHTML = '';
+}
+}
+
+
+function searchContent() {
+var query = document.getElementById('searchInput').value.toLowerCase().trim();
+var results = document.getElementById('searchResults');
+
+if (query.length < 3) {
+results.innerHTML = '<div class="no-results"><span>🔍</span><p>Escribe al menos 3 caracteres para buscar</p></div>';
+return;
+}
+
+var allResults = [];
+var exactVerseFound = false;
+
+// 1️⃣ Buscar COINCIDENCIA EXACTA de versículo primero
+for (var ref in verses) {
+if (ref.toLowerCase() === query || ref.toLowerCase().includes(query)) {
+exactVerseFound = true;
+allResults.unshift({
+type: '📖 Versículo',
+title: ref,
+text: verses[ref].substring(0, 150) + '...',
+action: 'openModal(\'' + ref + '\')',
+priority: 1
+});
+}
+}
+
+// 2️⃣ Buscar en versículos (parcial)
+if (!exactVerseFound) {
+for (var ref in verses) {
+if (verses[ref].toLowerCase().includes(query)) {
+allResults.push({
+type: '📖 Versículo',
+title: ref,
+text: verses[ref].substring(0, 150) + '...',
+action: 'openModal(\'' + ref + '\')',
+priority: 2
+});
+}
+}
+}
+
+// 3️⃣ Buscar en principios
+PP.forEach(function(p, i) {
+if (p.titulo.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)) {
+allResults.push({
+type: '✦ Principio ' + p.id,
+title: p.titulo,
+text: p.desc,
+action: 'go(' + i + ')',
+priority: 3
+});
+}
+if (p.html && p.html.toLowerCase().includes(query)) {
+allResults.push({
+type: '✦ Principio ' + p.id + ' (contenido)',
+title: p.titulo,
+text: 'Contiene: ' + query,
+action: 'go(' + i + ')',
+priority: 3
+});
+}
+});
+
+// 4️⃣ Ordenar resultados (versículos primero)
+allResults.sort(function(a, b) {
+return a.priority - b.priority;
+});
+
+// 5️⃣ Mostrar resultados
+if (allResults.length === 0) {
+results.innerHTML = '<div class="no-results"><span>😕</span><p>No se encontraron resultados para "<strong>' + query + '</strong>"</p></div>';
+} else {
+results.innerHTML = allResults.map(function(r) {
+var highlightedText = r.text.replace(new RegExp(query, 'gi'), function(match) {
+return '<span class="search-result-highlight">' + match + '</span>';
+});
+return '<div class="search-result-item" onclick="' + r.action + ';toggleSearch();"><div class="search-result-type">' + r.type + '</div><div class="search-result-title">' + r.title + '</div><div class="search-result-text">' + highlightedText + '</div></div>';
+}).join('');
+}
+}
+
+
+
+
+// Cerrar búsqueda con Escape
+document.addEventListener('keydown', function(e) {
+if (e.key === 'Escape') {
+document.getElementById('searchBar').style.display = 'none';
+}
 });
 
 
