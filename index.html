@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="theme-color" content="#0D0D0F">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Principios Básicos">
+<meta name="application-name" content="Principios Básicos">
+<meta name="msapplication-TileColor" content="#0D0D0F">
+<meta name="description" content="Principios Básicos de la Biblia — Iglesias Cristianas Internacionales">
+<title>Principios Básicos — Iglesias Cristianas Internacionales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fuentes: Playfair Display (Títulos) y Lato (Texto legible sin cursiva) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden;}
+:root{
+--gold:#D4AF37;--gold2:#F4E5C2;--gold3:#B8941F;
+--gold-glow:rgba(212,175,55,0.25);--gold-subtle:rgba(212,175,55,0.08);
+--bg:#0D0D0F;--bg2:#141417;--bg3:#1A1A1E;--bg4:#212126;
+--cream:#F5F5F7;--cream2:#C8C4B8;--muted:#7A7570;
+--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+--sw:300px;--hh:68px;--radius:16px;--radius-sm:10px;
+--shadow-sm:0 2px 8px rgba(0,0,0,0.3);--shadow-md:0 4px 20px rgba(0,0,0,0.4);
+--shadow-lg:0 8px 40px rgba(0,0,0,0.5);--shadow-gold:0 0 20px rgba(212,175,55,0.15);
+--t1:0.2s ease;--t2:0.3s ease;--t3:0.4s cubic-bezier(.4,0,.2,1);
+}
+body{
+font-family:'Lato',system-ui,Arial,sans-serif;background:var(--bg);color:var(--cream);
+min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+font-size:18px;line-height:1.7;transition:background var(--t3),color var(--t3);
+-webkit-tap-highlight-color: transparent;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
+@keyframes shimmer{0%{background-position:-200% center;}100%{background-position:200% center;}}
+@keyframes pulse{0%,100%{opacity:0.6;transform:scale(1);}50%{opacity:1;transform:scale(1.05);}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease, transform 0.6s cubic-bezier(0.4,0,0.2,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+header{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--hh);background:rgba(13,13,15,0.98);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
+.hbrand{display:flex;align-items:center;gap:12px;}
+.hcross{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gold);filter:drop-shadow(0 0 8px var(--gold-glow));transition:transform var(--t2);animation:pulse 3s ease-in-out infinite;cursor:pointer;}
+.hcross:hover{transform:scale(1.15) rotate(5deg);}
+.htitles{display:flex;flex-direction:column;gap:1px;}
+.hsub{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;font-weight:700;}
+.htitle{font-family:'Playfair Display',Georgia,serif;font-size:16px;color:var(--gold);font-weight:600;}
+.hprog{display:flex;align-items:center;gap:10px;}
+.hprog-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:600;}
+.hprog-bar{width:100px;height:4px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.hprog-fill{height:100%;background:linear-gradient(90deg,var(--gold) 0%,var(--gold2) 100%);transition:width .5s ease;width:0%;position:relative;}
+.hprog-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);background-size:200% 100%;animation:shimmer 2s infinite;}
+.menubtn{display:none;background:none;border:none;cursor:pointer;color:var(--cream);padding:8px;min-width:44px;min-height:44px;border-radius:8px;touch-action: manipulation;}
+.menubtn:hover{background:rgba(255,255,255,0.07);}
+.menubtn span{display:block;width:20px;height:2px;background:var(--cream);border-radius:2px;transition:all var(--t2);margin:4px auto;}
+.menubtn.active span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+.menubtn.active span:nth-child(2){opacity:0;}
+.menubtn.active span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+#themeBtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--border2);background:rgba(255,255,255,0.05);cursor:pointer;font-size:16px;transition:all var(--t2);touch-action: manipulation;}
+#themeBtn:hover{background:var(--gold-subtle);border-color:var(--gold);transform:scale(1.1) rotate(20deg);box-shadow:var(--shadow-gold);}
+.layout{display:flex;margin-top:var(--hh);min-height:calc(100vh - var(--hh));}
+aside{width:var(--sw);background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:var(--hh);left:0;bottom:0;overflow-y:auto;transition:transform var(--t3);z-index:50;box-shadow:2px 0 20px rgba(0,0,0,0.3);-webkit-overflow-scrolling: touch;}
+aside::-webkit-scrollbar{width:3px;}
+aside::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.sb-top{padding:20px 18px 14px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--bg3) 0%,transparent 100%);}
+.sb-heading{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;font-weight:700;margin-bottom:10px;}
+.sb-prog-wrap{display:flex;align-items:center;gap:10px;}
+.sb-prog-bar{flex:1;height:3px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
+.sb-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .5s ease;width:0%;}
+.sb-prog-pct{font-size:11px;color:var(--gold);font-weight:700;min-width:32px;text-align:right;}
+.sb-list{padding:8px 0 20px;}
+.sb-item{display:flex;align-items:center;gap:12px;padding:12px 18px;cursor:pointer;border-left:3px solid transparent;transition:all var(--t2);min-height:52px;touch-action: manipulation;}
+.sb-item:hover{background:rgba(255,255,255,0.04);}
+.sb-item.active{background:rgba(212,175,55,0.08);border-left-color:var(--gold);}
+.sb-num{width:28px;height:28px;border-radius:50%;background:var(--bg4);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);font-weight:700;flex-shrink:0;transition:all var(--t2);}
+.sb-item.active .sb-num,.sb-item.done .sb-num{background:rgba(212,175,55,0.15);border-color:var(--gold);color:var(--gold);box-shadow:0 0 8px var(--gold-glow);}
+.sb-text{flex:1;min-width:0;}
+.sb-title{font-size:13px;font-weight:700;color:var(--cream2);line-height:1.3;}
+.sb-item.active .sb-title{color:var(--gold);}
+.sb-desc{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+main{margin-left:var(--sw);flex:1;min-height:calc(100vh - var(--hh));}
+.welcome{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--hh));padding:48px 24px;text-align:center;background:radial-gradient(ellipse at 50% 30%,rgba(212,175,55,0.04) 0%,transparent 60%);position:relative;overflow:hidden;}
+.w-inner{max-width:640px;z-index:1;}
+.w-cross{font-size:72px;display:block;margin-bottom:24px;filter:drop-shadow(0 0 30px rgba(212,175,55,.5));animation:scaleIn 0.8s ease forwards;}
+.w-church{font-size:10px;letter-spacing:5px;color:var(--muted);text-transform:uppercase;font-weight:700;margin-bottom:14px;animation:fadeUp 0.6s ease forwards;opacity:0;animation-delay:0.1s;}
+.w-h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(34px,5vw,56px);line-height:1.1;color:var(--cream);margin-bottom:14px;font-weight:700;animation:fadeUp 0.6s ease forwards;opacity:0;animation-delay:0.2s;}
+.w-h1 em{color:var(--gold);font-style:italic;background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.w-sub{font-size:18px;color:var(--cream2);line-height:1.7;margin-bottom:40px;animation:fadeUp 0.6s ease forwards;opacity:0;animation-delay:0.3s;}
+.w-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:40px;text-align:left;}
+.w-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;cursor:pointer;transition:all var(--t2);box-shadow:var(--shadow-sm);animation:fadeUp 0.6s ease forwards;opacity:0;touch-action: manipulation;}
+.w-card:hover{border-color:var(--gold3);background:var(--bg3);transform:translateY(-4px);box-shadow:var(--shadow-md),var(--shadow-gold);}
+.w-cnum{font-size:10px;color:var(--gold);font-weight:700;letter-spacing:2px;margin-bottom:5px;}
+.w-ctitle{font-family:'Playfair Display',Georgia,serif;font-size:14px;color:var(--cream);line-height:1.3;font-weight:600;}
+.w-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold3) 100%);color:#1a1000;border:none;cursor:pointer;padding:16px 44px;border-radius:50px;font-size:15px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;transition:all var(--t2);box-shadow:0 4px 20px rgba(212,175,55,.35);animation:fadeUp 0.6s ease forwards;opacity:0;animation-delay:0.5s;touch-action: manipulation;}
+.w-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 32px rgba(212,175,55,.5);}
+.pview{display:none;}
+.pview.active{display:block;animation:fadeUp .35s cubic-bezier(.4,0,.2,1);}
+.hero{position:relative;padding:70px 52px 60px;overflow:hidden;border-bottom:1px solid var(--border);width:100%;box-sizing:border-box;background:linear-gradient(135deg, var(--bg) 0%, rgba(13,13,15,0.92) 45%, var(--bg) 100%);}
+.hero-glow{position:absolute;inset:0;pointer-events:none;opacity:0.8;background:radial-gradient(ellipse at 72% 50%, currentColor 0%, transparent 65%);mix-blend-mode: soft-light;}
+.hero-grad{position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg, var(--bg) 0%, rgba(13,13,15,0.75) 50%, var(--bg) 100%);}
+.hero-n{position:relative;font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.hero-n::before{content:'';width:28px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);display:inline-block;}
+.hero-ico{position:relative;font-size:64px;margin-bottom:20px;display:block;filter:drop-shadow(0 8px 24px rgba(212,175,55,0.5));}
+.pview.active .hero-ico{animation:scaleIn .6s cubic-bezier(.34,1.56,.64,1);}
+.hero-h{position:relative;font-family:'Playfair Display',Georgia,serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:16px;letter-spacing:-0.5px;}
+.hero-d{position:relative;font-size:18px;color:var(--cream2);max-width:min(600px,100%);line-height:1.8;opacity:0.95;}
+.hero-line{position:absolute;bottom:0;left:52px;width:80px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--gold),transparent);}
+body.light .hero{background:linear-gradient(135deg, var(--bg) 0%, rgba(250,249,246,0.96) 40%, var(--bg) 100%);}
+body.light .hero-grad{background:linear-gradient(135deg, rgba(250,249,246,0.95) 0%, rgba(250,249,246,0.90) 50%, rgba(250,249,246,0.95) 100%);}
+body.light .hero-glow{background:radial-gradient(ellipse at 72% 50%, rgba(139,105,20,0.18) 0%, transparent 65%);opacity:1;}
+body.light .hero-h{color:#1A1A1A;text-shadow:0 2px 12px rgba(0,0,0,0.08);}
+body.light .hero-d{color:#3D3830;opacity:1;}
+body.light .hero-n{color:#8B6914;}
+body.light .hero-line{background:linear-gradient(90deg,#8B6914,transparent);}
+@media(max-width:768px){.hero{padding:35px 18px 36px;}.hero-ico{font-size:52px;}.hero-h{font-size:clamp(28px,8vw,42px);}.hero-line{left:18px;width:60px;}}
+.pbody{padding:48px 52px 64px;max-width:840px;box-sizing:border-box;}
+.slabel{display:flex;align-items:center;gap:14px;margin:40px 0 20px;}
+.slabel:first-child{margin-top:0;}
+.slabel-ico{width:34px;height:34px;background:var(--gold-subtle);border:1px solid rgba(212,175,55,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.slabel-txt{font-size:9px;letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;font-weight:700;white-space:nowrap;}
+.sdiv{flex:1;height:1px;background:linear-gradient(90deg,rgba(212,175,55,.3),transparent);}
+.purpose{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--radius);padding:24px 28px;margin-bottom:32px;box-shadow:var(--shadow-sm);transition:transform var(--t2);}
+.purpose:hover{transform:translateX(4px);}
+.purpose-lbl{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:10px;}
+.purpose-txt{font-family:'Lato',sans-serif;font-size:18px;color:var(--cream);line-height:1.75;font-style:normal;font-weight:400;} /* Sin cursiva */
+.facts-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:24px;box-shadow:var(--shadow-sm);}
+.facts-box h4{font-family:'Playfair Display',Georgia,serif;font-size:17px;color:var(--gold);margin-bottom:14px;font-weight:600;}
+.facts-box ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.facts-box ul li{display:flex;gap:10px;align-items:flex-start;font-size:16px;color:var(--cream2);line-height:1.6;}
+.facts-box ul li::before{content:'✦';color:var(--gold);font-size:10px;flex-shrink:0;margin-top:6px;}
+.sc-list{display:flex;flex-direction:column;gap:18px;}
+.sc-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all var(--t2);box-shadow:var(--shadow-sm);}
+.sc-card:hover{border-color:rgba(212,175,55,.3);transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.sc-refbar{background:linear-gradient(90deg,rgba(212,175,55,.1) 0%,rgba(212,175,55,.04) 100%);border-bottom:1px solid var(--border);padding:12px 22px;}
+.sc-ref{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all var(--t1);display:inline-block;touch-action: manipulation;}
+.sc-ref:hover{color:var(--gold2);text-decoration:underline;}
+.sc-body{padding:24px 26px;position:relative;}
+.sc-qm{position:absolute;top:4px;left:14px;font-family:'Playfair Display',Georgia,serif;font-size:90px;line-height:1;color:var(--gold);opacity:.04;pointer-events:none;font-style:italic;}
+
+/* ✅ CAMBIO CLAVE: Tipografía Lato, sin cursiva, con números de versículo visibles */
+.sc-verse {
+    font-family: 'Lato', sans-serif; /* Fuente clara y legible */
+    font-size: 18px;
+    color: var(--cream);
+    line-height: 1.8;
+    position: relative;
+    font-style: normal; /* SIN CURSIVA */
+    margin-bottom: 18px;
+    font-weight: 400;
+}
+
+.sc-pts{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.sc-pts li{display:flex;gap:10px;align-items:flex-start;font-size:16px;color:var(--cream2);line-height:1.65;}
+.sc-pts li::before{content:'›';color:var(--gold);font-size:20px;line-height:1;flex-shrink:0;margin-top:1px;}
+.sc-pts li.q{color:var(--gold2);font-style:italic;}
+.sc-pts li.q::before{content:'P:';font-size:12px;font-weight:700;margin-top:3px;}
+.def-grid{display:flex;flex-direction:column;gap:0;}
+.def-item{padding:14px 0;border-bottom:1px solid var(--border);transition:background var(--t1);}
+.def-item:last-child{border-bottom:none;}
+.def-item:hover{background:rgba(212,175,55,.03);}
+.def-term{font-family:'Playfair Display',Georgia,serif;font-size:16px;color:var(--gold);font-weight:600;margin-bottom:4px;}
+.def-greek{font-size:12px;color:var(--gold3);letter-spacing:1px;font-style:italic;}
+.def-desc{font-size:16px;color:var(--cream2);line-height:1.6;}
+.article-body{font-family:'Lato',sans-serif;font-size:18px;color:var(--cream2);line-height:1.85;} /* Sin serifas para lectura médica */
+.article-body p{margin-bottom:18px;}
+.article-body strong{color:var(--cream);font-family:'Lato',Arial,sans-serif;font-size:15px;font-weight:700;}
+.challenge{background:linear-gradient(135deg,rgba(212,175,55,.1) 0%,rgba(212,175,55,.04) 100%);border:1px solid rgba(212,175,55,.3);border-radius:var(--radius);padding:26px 30px;box-shadow:0 0 24px rgba(212,175,55,.08);}
+.challenge-h{font-family:'Playfair Display',Georgia,serif;font-size:22px;color:var(--gold);margin-bottom:12px;font-weight:600;}
+.challenge-t{font-size:17px;color:var(--cream2);line-height:1.7;}
+.video-outer{display:flex;flex-direction:column;gap:12px;}
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--bg2);}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.vid-ext-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(212,175,55,.35);color:var(--gold);padding:10px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;text-decoration:none;transition:all var(--t2);align-self:flex-start;touch-action: manipulation;}
+.vid-ext-btn:hover{background:var(--gold-subtle);border-color:var(--gold);}
+.navfoot{display:flex;justify-content:space-between;align-items:center;padding:32px 52px 52px;border-top:1px solid var(--border);}
+.nbtn{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border2);color:var(--cream2);cursor:pointer;padding:14px 22px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;transition:all var(--t2);text-transform:uppercase;min-height:50px;touch-action: manipulation;}
+.nbtn:hover:not(:disabled){border-color:var(--gold3);color:var(--gold);background:var(--gold-subtle);transform:translateY(-2px);}
+.nbtn:disabled{opacity:.2;cursor:not-allowed;}
+.nbtn.primary{background:linear-gradient(135deg,var(--gold) 0%,var(--gold3) 100%);color:#1a1000;border-color:transparent;box-shadow:0 4px 16px rgba(212,175,55,.35);}
+.nbtn.primary:hover:not(:disabled){box-shadow:0 6px 24px rgba(212,175,55,.5);transform:translateY(-2px) scale(1.02);}
+.ncenter{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.cbtn{background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.3);color:var(--gold);cursor:pointer;padding:10px 22px;border-radius:30px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;transition:all var(--t2);touch-action: manipulation;}
+.cbtn:hover{background:rgba(212,175,55,.15);transform:scale(1.05);}
+.cbtn.done{background:rgba(212,175,55,.18);color:var(--gold2);}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:all var(--t3);}
+.modal-overlay.active{opacity:1;visibility:visible;}
+.modal-content{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);max-width:500px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:var(--shadow-lg);transform:scale(0.9);transition:transform var(--t3);-webkit-overflow-scrolling: touch;}
+.modal-overlay.active .modal-content{transform:scale(1);}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg2);z-index:1;}
+.modal-title{font-family:'Playfair Display',Georgia,serif;font-size:18px;color:var(--gold);font-weight:600;}
+.modal-close{width:32px;height:32px;border-radius:50%;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all var(--t1);touch-action: manipulation;}
+.modal-close:hover{background:rgba(255,255,255,0.05);color:var(--cream);}
+.modal-body{padding:24px;}
+
+/* ✅ MODAL: Letra clara, sin cursiva */
+.modal-verse {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    color: var(--cream);
+    line-height: 1.8;
+    font-style: normal; /* SIN CURSIVA */
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:40;backdrop-filter:blur(0px);touch-action: manipulation;}
+.overlay.active{display:block;}
+#offlineBar{display:none;position:fixed;top:var(--hh);left:0;right:0;z-index:200;background:linear-gradient(90deg,#8B3A3A,#A04040);color:#fff;font-size:13px;font-weight:700;text-align:center;padding:9px 16px;}
+#offlineBar.show{display:block;}
+#installBanner{display:none;position:fixed;bottom:20px;left:50%;z-index:200;transform:translateX(-50%);background:rgba(20,20,23,0.97);border:1px solid rgba(212,175,55,.5);border-radius:var(--radius);padding:16px 22px;align-items:center;gap:14px;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:var(--shadow-lg);max-width:360px;width:calc(100% - 40px);}
+#installBanner.show{display:flex;}
+#installBanner .ib-txt{font-size:14px;color:var(--cream2);flex:1;line-height:1.5;}
+#installBanner .ib-txt strong{color:var(--cream);display:block;margin-bottom:2px;font-size:15px;}
+#installBanner .ib-install{background:linear-gradient(135deg,var(--gold),var(--gold3));color:#1a1000;border:none;cursor:pointer;padding:10px 18px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;touch-action: manipulation;}
+#installBanner .ib-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:4px;touch-action: manipulation;}
+body.light{--bg:#FAF9F6;--bg2:#FFFFFF;--bg3:#F2EFE8;--bg4:#E8E4DA;--gold:#8B6914;--gold2:#A07820;--gold3:#C49A2A;--cream:#1A1A1A;--cream2:#3D3830;--muted:#7A7260;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);--shadow-sm:0 2px 8px rgba(0,0,0,0.06);--shadow-md:0 4px 20px rgba(0,0,0,0.1);}
+body.light header{background:rgba(250,249,246,0.95);}
+body.light aside{background:#FFFFFF;}
+body.light .modal-content{background:#FFFFFF;}
+body.light .modal-header{background:#FFFFFF;}
+@media(max-width:768px){header{padding:0 14px;}.hprog{display:none;}.menubtn{display:flex;flex-direction:column;justify-content:center;align-items:center;}aside{transform:translateX(-100%);}aside.open{transform:translateX(0);}main{margin-left:0;width:100%;}.welcome{padding:24px 16px;}.w-cross{font-size:56px;}.w-h1{font-size:clamp(28px,8vw,40px);}.w-grid{grid-template-columns:1fr;gap:10px;}.hero{padding:28px 18px 32px;}.hero-line{left:18px;}.pbody{padding:22px 18px 44px;}.navfoot{padding:18px 14px 32px;gap:8px;flex-wrap:wrap;}.nbtn{padding:12px 12px;font-size:11px;flex:1;justify-content:center;}.ncenter{width:100%;order:-1;margin-bottom:10px;}.cbtn{padding:10px 16px;font-size:11px;}.pview.active{opacity:1 !important;visibility:visible !important;}main{opacity:1 !important;}.sb-item,.w-card,.nbtn,.cbtn,.sc-ref,.w-btn{-webkit-tap-highlight-color: rgba(212,175,55,0.3);}.sc-verse{font-size:16px;}.sc-pts li{font-size:15px;}.purpose-txt{font-size:16px;}.def-term{font-size:15px;}.def-desc{font-size:14px;}.article-body{font-size:16px;}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}}
+</style>
+</head>
+<body>
+<header>
+<div class="hbrand">
+<button class="menubtn" onclick="toggleSB()" aria-label="Menú"><span></span><span></span><span></span></button>
+<div class="hcross" onclick="go(-1)">✝</div>
+<div class="htitles">
+<div class="hsub">Iglesias Cristianas Internacionales</div>
+<div class="htitle">Principios Básicos</div>
+</div>
+</div>
+<button id="themeBtn" onclick="toggleTheme()" aria-label="Cambiar modo">🌙</button>
+<div class="hprog">
+<span class="hprog-lbl" id="hLbl">0 / 10</span>
+<div class="hprog-bar"><div class="hprog-fill" id="hFill"></div></div>
+</div>
+</header>
+<div class="overlay" id="overlay" onclick="toggleSB()"></div>
+<div class="layout">
+<aside id="sidebar">
+<div class="sb-top">
+<div class="sb-heading">Tu Progreso</div>
+<div class="sb-prog-wrap">
+<div class="sb-prog-bar"><div class="sb-prog-fill" id="sFill"></div></div>
+<div class="sb-prog-pct" id="sPct">0%</div>
+</div>
+</div>
+<nav class="sb-list" id="sbList"></nav>
+</aside>
+<main id="mainEl">
+<div class="welcome" id="welcome">
+<div class="w-inner">
+<span class="w-cross">✝</span>
+<div class="w-church">Iglesias Cristianas Internacionales</div>
+<h1 class="w-h1">Principios <em>Básicos</em><br>de la Biblia</h1>
+<p class="w-sub">Un curso de 10 principios fundamentales para conocer a Dios y crecer en la fe cristiana.</p>
+<div class="w-grid" id="wGrid"></div>
+<button class="w-btn" onclick="go(0)">Comenzar el Curso →</button>
+</div>
+</div>
+<div id="pCont"></div>
+</main>
+</div>
+<div class="modal-overlay" id="verseModal" onclick="closeModal(event)">
+<div class="modal-content" onclick="event.stopPropagation()">
+<div class="modal-header">
+<div class="modal-title" id="modalTitle">Cargando...</div>
+<button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+</div>
+<div class="modal-body">
+<div class="modal-verse" id="modalVerse"></div>
+</div>
+</div>
+</div>
+<div id="offlineBar">📵 Sin conexión — mostrando contenido guardado</div>
+<div id="installBanner" role="dialog">
+<div class="ib-txt"><strong>✝ Instalar App</strong>Accede sin internet, como app en tu celular</div>
+<button class="ib-install" onclick="installApp()">Instalar</button>
+<button class="ib-close" onclick="closeInstallBanner()">✕</button>
+</div>
+<script>
+/* ═══════════════════════════════════════════════════════════ BASE DE DATOS DE VERSÍCULOS COMPLETA (NVI CON NÚMEROS) ═══════════════════════════════════════════════════════════ */
+var verses = {
+'Salmo 119:1-2': '1 Dichosos los que son intachables en su conducta, los que viven conforme a la ley del Señor. 2 Dichosos los que cumplen sus estatutos y lo buscan de todo corazón;',
+'Mateo 6:25-34': '25 »Por eso les digo: No se preocupen por su vida, qué van a comer o beber; ni por vuestro cuerpo, qué van a vestir. ¿No vale la vida más que la comida, y el cuerpo más que la ropa? 26 Fíjense en las aves del cielo: no siembran ni cosechan ni almacenan en graneros; sin embargo, el Padre celestial las alimenta. ¿No valen ustedes mucho más que ellas? 27 ¿Quién de ustedes, por mucho que se preocupe, puede añadir siquiera una hora al curso de su vida? 28 »Y por qué se preocupan por la ropa? Fíjense en cómo crecen los lirios del campo. No trabajan ni hilan. 29 Sin embargo, les digo que ni Salomón, con todo su esplendor, se vestía como uno de ellos. 30 Si así viste Dios a la hierba del campo, que hoy es y mañana es echada al horno, ¿no hará mucho más por ustedes, gente de poca fe? 31 »Así que no se preocupen diciendo: “¿Qué vamos a comer?” o “¿Qué vamos a beber?” o “¿Con qué nos vamos a vestir?”. 32 Los paganos se afanan por esas cosas, pero el Padre celestial sabe que ustedes las necesitan. 33 Más bien, busquen primeramente el reino de Dios y su justicia, y todas estas cosas les serán añadidas. 34 Por tanto, no se preocupen por el mañana, pues el mañana traerá sus propias preocupaciones. ¡Basta a cada día con sus propios problemas!',
+'Hechos 17:24-28': '24 »El Dios que hizo el mundo y todo lo que en él hay, es Señor del cielo y de la tierra, y no vive en templos hechos por manos humanas. 25 Tampoco es atendido por manos humanas, como si necesitara algo, porque él es quien da vida y aliento y todas las cosas a todos. 26 De una sola sangre hizo a todas las naciones de los hombres, para que habitaran sobre toda la faz de la tierra; y determinó los períodos establecidos y los límites precisos de su habitación. 27 Todo esto lo hizo para que los hombres buscaran a Dios, y en algún modo lo hallaran, aunque ciertamente no está lejos de cada uno de nosotros. 28 Porque en él vivimos, y nos movemos, y somos; como algunos de vuestros propios poetas han dicho: Porque linaje suyo somos.',
+'Juan 4:23-24': '23 »Sin embargo, llega la hora, y ya ha llegado, en que los verdaderos adoradores adorarán al Padre en espíritu y en verdad. El Padre busca adoradores así, 24 porque Dios es espíritu, y sus adoradores deben adorarlo en espíritu y en verdad.»',
+'Jeremías 29:11-13': '11 »Porque yo sé muy bien los planes que tengo para ustedes —afirma el Señor—, planes de bienestar y no de calamidad, a fin de darles un futuro y una esperanza. 12 Entonces me invocarán, y vendrán a orarme, y yo los escucharé. 13 Me buscarán y me encontrarán cuando me busquen de todo corazón.',
+'Hechos 8:26-39': '26 El ángel del Señor le dijo a Felipe: «Ponte en marcha hacia el sur, por el camino que baja de Jerusalén a Gaza». Este camino pasa por el desierto. 27 Felipe se puso en marcha, y sucedió que un etíope, eunuco y alto funcionario de Candaces, reina de Etiopía, encargado de todos sus tesoros, había ido a Jerusalén para adorar. 28 En su carro de regreso iba leyendo al profeta Isaías. 29 El Espíritu le dijo a Felipe: «Acércate a ese carro y mantente cerca de él». 30 Felipe corrió hacia el carro y oyó que el hombre estaba leyendo al profeta Isaías. Le preguntó: «¿Entiendes lo que vas leyendo?». 31 Él respondió: «¿Cómo voy a entenderlo si nadie me lo explica?». Así que invitó a Felipe a subir y a sentarse a su lado. 32 El pasaje de la Escritura que estaba leyendo era este: «Como oveja fue llevado al matadero; y como cordero mudo ante el que lo trasquila, así no abrió su boca. 33 En su humillación no se le hizo justicia. ¿Quién podrá contar su descendencia? Porque su vida fue quitada de la tierra». 34 El eunuco le preguntó a Felipe: «Dime, ¿de quién dice esto el profeta? ¿De sí mismo o de otro?». 35 Entonces Felipe, comenzando por ese pasaje de la Escritura, le anunció las buenas nuevas de Jesús. 36 Mientras seguían por el camino, llegaron a un lugar donde había agua, y el eunuco dijo: «Mira, aquí hay agua. ¿Qué impide que yo sea bautizado?». 37 Felipe contestó: «Sí puedes, si crees de todo corazón». El eunuco respondió: «Creo que Jesucristo es el Hijo de Dios». 38 Mandó parar el carro, y bajaron ambos al agua, y Felipe lo bautizó. 39 Cuando salieron del agua, el Espíritu del Señor arrebató a Felipe, y el eunuco no lo vio más, sino que siguió su camino lleno de alegría.',
+'Mateo 7:7-8': '7 »Pidan, y se les dará; busquen, y encontrarán; llamen, y se les abrirá. 8 Porque todo el que pide, recibe; el que busca, encuentra; y al que llama, se le abre.',
+'2 Timoteo 3:16-17': '16 Toda la Escritura es inspirada por Dios y útil para enseñar, para reprender, para corregir y para instruir en la justicia, 17 a fin de que el siervo de Dios esté enteramente capacitado para toda buena obra.',
+'Hebreos 4:12-13': '12 Porque la palabra de Dios es viva y eficaz. Más cortante que cualquier espada de dos filos, penetra hasta dividir alma y espíritu, coyunturas y médulas, y discierne los pensamientos y las intenciones del corazón. 13 No hay nada creado que pueda esconderse de Dios; al contrario, todo está desnudo y expuesto ante los ojos de aquel a quien tenemos que rendir cuentas.',
+'2 Pedro 1:19-21': '19 Tenemos también la palabra profética más segura, a la cual hacen bien en prestar atención, como a una lámpara que brilla en un lugar oscuro, hasta que el día amanezca y el lucero de la mañana salga en sus corazones. 20 Ante todo, tengan presente que ninguna profecía de la Escritura proviene de interpretación alguna, 21 porque jamás la profecía tuvo su origen en la voluntad humana, sino que los profetas hablaron de parte de Dios, impulsados por el Espíritu Santo.',
+'Juan 8:31-32': '31 A los judíos que habían creído en él, Jesús les decía: «Si ustedes se mantienen firmes en mi palabra, serán verdaderamente mis discípulos. 32 Conocerán la verdad, y la verdad los hará libres».',
+'Marcos 7:1-13': '1 Se reunieron alrededor de Jesús los fariseos y algunos maestros de la ley que habían venido de Jerusalén. 2 Al ver que algunos de los discípulos de Jesús comían con las manos sucias, es decir, sin lavárselas, los criticaron. 3 (Los fariseos y, en general, los judíos no comen sin lavarse cuidadosamente las manos, obedeciendo así la tradición de sus mayores. 4 Cuando regresan de la plaza, tampoco comen sin antes hacer ciertas abluciones. Y observan muchas otras tradiciones, como el lavado de copas, jarros y utensilios de metal). 5 Los fariseos y los maestros de la ley le preguntaron a Jesús: «¿Por qué tus discípulos no siguen la tradición de nuestros ancianos, sino que comen con las manos sucias?». 6 Él les contestó: «¡Hipócritas! Bien profetizó Isaías acerca de ustedes, como está escrito: “Este pueblo me honra con los labios, pero su corazón está lejos de mí. 7 En vano me rinden culto, porque enseñan doctrinas que son preceptos humanos”. 8 Ustedes dejan de lado el mandamiento de Dios para aferrarse a las tradiciones de los hombres». 9 Y añadió: «¡Qué bien saben ustedes cómo invalidar la palabra de Dios para mantener sus propias tradiciones!',
+'1 Timoteo 4:16': '16 Cuídate a ti mismo y a tu enseñanza; persevera en estas cosas, pues haciéndolo te salvarás a ti mismo y a los que te escuchen.',
+'Hechos 17:10-11': '10 En cuanto llegó la noche, los hermanos enviaron a Pablo y a Silas a Berea. Al llegar allá, fueron a la sinagoga de los judíos. 11 Estos eran de noble carácter, pues recibieron el mensaje con gran interés y examinaban las Escrituras todos los días para ver si las cosas eran así.',
+'Santiago 1:22-25': '22 Lléven a la práctica la palabra, y no se limiten sólo a oírla, engañándose a sí mismos. 23 Porque si alguno se limita a oír la palabra pero no la pone en práctica, es semejante a alguien que observa su rostro natural en un espejo. 24 Se observa a sí mismo, se va y luego olvida cómo era. 25 Pero el que considera detenidamente la ley perfecta que da libertad, y persevera en ella, no como oidor olvidadizo sino como hacedor de la obra, será dichoso en lo que hace.',
+'Juan 12:48': '48 »El que me rechaza y no acepta mis palabras tiene ya quien lo juzgue; la palabra que he hablado lo condenará en el día final.',
+'Mateo 28:18-20': '18 Jesús se acercó a ellos y les dijo: «Se me ha dado toda autoridad en el cielo y en la tierra. 19 Por tanto, vayan y hagan discípulos de todas las naciones, bautizándolos en el nombre del Padre y del Hijo y del Espíritu Santo, 20 y enseñándoles a obedecer todo lo que les he mandado a ustedes. Y recuerden: yo estoy con ustedes siempre, hasta el fin del mundo».',
+'Hechos 11:25-26': '25 Después Bernabé fue a Tarso a buscar a Saulo, y cuando lo encontró, lo llevó a Antioquía. 26 Durante todo un año se reunieron allí con la iglesia e instruyeron a mucha gente. Fue en Antioquía donde por primera vez se llamó cristianos a los discípulos.',
+'Marcos 1:14-18': '14 Después de que Juan fue encarcelado, Jesús fue a Galilea a predicar el evangelio de Dios. 15 Decía: «Se ha cumplido el tiempo. El reino de Dios está cerca. ¡Arrepentíos y creed en el evangelio!». 16 Pasando junto al mar de Galilea, vio a Simón y a su hermano Andrés, que echaban las redes en el lago, pues eran pescadores. 17 Jesús les dijo: «Síganme, y los haré pescadores de hombres». 18 Inmediatamente dejaron las redes y lo siguieron.',
+'Lucas 9:23-26': '23 Luego dijo a todos: «Si alguno quiere venir en pos de mí, niéguese a sí mismo, tome su cruz cada día y sígame. 24 Porque el que quiera salvar su vida, la perderá; pero el que pierda su vida por causa de mí, la salvará. 25 ¿De qué le sirve a uno ganar el mundo entero, si se pierde o se destruye a sí mismo? 26 El que se avergüence de mí y de mis palabras, de ése se avergonzará el Hijo del hombre cuando venga en su gloria y en la del Padre y de los santos ángeles.',
+'Lucas 14:25-33': '25 Grandes multitudes iban con Jesús, y él, volviéndose, les dijo: 26 «Si alguno viene a mí y no aborrece a su padre y a su madre, a su mujer y a sus hijos, a sus hermanos y hermanas, y aun a su propia vida, no puede ser mi discípulo. 27 El que no carga su cruz y me sigue, no puede ser mi discípulo. 28 Supongamos que uno de ustedes quiere edificar una torre. ¿No se sienta primero a calcular el gasto, a ver si tiene dinero suficiente para terminarla? 29 No sea que después de haber puesto los cimientos, no pueda terminarla, y todos los que lo vean se burlen de él 30 diciendo: “Éste empezó a edificar y no pudo terminar”. 31 O supongamos que un rey sale a pelear contra otro rey. ¿No se sienta primero a considerar si con diez mil soldados puede hacer frente al que viene contra él con veinte mil? 32 Si no puede, mientras el otro está todavía lejos, le envía una embajada y le pide condiciones de paz. 33 De la misma manera, cualquiera de ustedes que no renuncie a todos sus bienes no puede ser mi discípulo».',
+'Lucas 11:1-4': '1 Una vez, mientras Jesús estaba orando en cierto lugar, cuando terminó, uno de sus discípulos le dijo: «Señor, enséñanos a orar, como también Juan enseñó a sus discípulos». 2 Les dijo: «Cuando oren, digan: “Padre nuestro que estás en el cielo, santificado sea tu nombre. Venga tu reino. 3 Hágase tu voluntad, como en el cielo, así también en la tierra. Danos cada día nuestro pan cotidiano. 4 Perdona nuestros pecados, porque también nosotros perdonamos a todos los que nos deben. Y no nos dejes caer en tentación”».',
+'Mateo 22:34-40': '34 Al oír los fariseos que Jesús había dejado sin respuesta a los saduceos, se reunieron. 35 Uno de ellos, experto en la ley, le tendió una trampa con esta pregunta: 36 «Maestro, ¿cuál es el mandamiento más importante de la ley?». 37 Jesús le respondió: «“Amarás al Señor tu Dios con todo tu corazón, con toda tu alma y con toda tu mente”. 38 Éste es el primero y el más importante de los mandamientos. 39 El segundo es semejante a éste: “Amarás a tu prójimo como a ti mismo”. 40 De estos dos mandamientos dependen toda la ley y los Profetas».',
+'Juan 13:34-35': '34 »Les doy un mandamiento nuevo: ámense los unos a los otros. Así como yo los he amado, ámense también ustedes los unos a los otros. 35 En esto conocerán todos que ustedes son mis discípulos, si se aman los unos a los otros».',
+'Isaías 2:1-4': '1 Lo que vieron Isaías hijo de Amoz, tocante a Judá y a Jerusalén: 2 En los últimos días acontecerá que el monte de la casa del Señor será establecido como cabeza de los montes, y será exaltado sobre los collados, y correrán a él todas las naciones. 3 Vendrán muchos pueblos, y dirán: «Venid, y subamos al monte del Señor, a la casa del Dios de Jacob, para que nos enseñe sus caminos, y andemos por sus sendas». Porque de Sion saldrá la ley, y de Jerusalén la palabra del Señor. 4 Juzgará entre las naciones, y reprenderá a muchos pueblos; y volverán sus espadas en rejas de arado, y sus lanzas en hoces; no alzará espada nación contra nación, ni se adiestrarán más para la guerra.',
+'Daniel 2:31-45': '31 »Tú, oh rey, veías, y he aquí una gran imagen. Esta imagen, que estaba en pie delante de ti, era muy hermosa; su aspecto era formidable. 32 La cabeza de esta imagen era de oro fino; su pecho y sus brazos, de plata; su vientre y sus muslos, de bronce; 33 sus piernas, de hierro; sus pies, en parte de hierro y en parte de barro cocido. 34 Estabas mirando, hasta que una piedra fue cortada, no con mano, e hirió a la imagen en sus pies de hierro y de barro cocido, y los desmenuzó. 35 Entonces fueron desmenuzados también el hierro, el barro cocido, el bronce, la plata y el oro, y fueron como tamo de las eras del verano, y se los llevó el viento sin que de ellos quedara rastro alguno. Mas la piedra que hirió a la imagen fue hecha un gran monte que llenó toda la tierra. [...] 44 El Dios del cielo levantará un reino que no será jamás destruido, ni será el reino dejado a otro pueblo; desmenuzará y consumirá a todos estos reinos, pero él permanecerá para siempre.',
+'Mateo 3:1-2': '1 En aquellos días vino Juan el Bautista predicando en el desierto de Judea, 2 y diciendo: «Arrepentíos, porque el reino de los cielos se ha acercado».',
+'Mateo 4:17': '17 Desde entonces comenzó Jesús a predicar, y a decir: «Arrepentíos, porque el reino de los cielos se ha acercado».',
+'Mateo 16:13-19': '13 Cuando Jesús llegó a la región de Cesarea de Filipo, preguntó a sus discípulos: «¿Quién dice la gente que es el Hijo del hombre?». 14 Ellos respondieron: «Unos dicen que eres Juan el Bautista; otros, Elías; y otros, Jeremías o alguno de los profetas». 15 «Y vosotros», les preguntó, «¿quién decís que soy yo?». 16 Respondiendo Simón Pedro, dijo: «Tú eres el Cristo, el Hijo del Dios viviente». 17 Entonces le respondió Jesús: «Bienaventurado eres, Simón, hijo de Jonás, porque no te lo reveló carne ni sangre, sino mi Padre que está en los cielos. 18 Y yo también te digo, que tú eres Pedro, y sobre esta roca edificaré mi iglesia; y las puertas del Hades no prevalecerán contra ella. 19 Y a ti te daré las llaves del reino de los cielos; y todo lo que atares en la tierra será atado en los cielos; y todo lo que desatares en la tierra será desatado en los cielos».',
+'Marcos 9:1': '1 Y les dijo: «De cierto os digo que hay algunos de los que están aquí, que no gustarán la muerte hasta que hayan visto el reino de Dios venido con poder».',
+'Juan 3:1-7': '1 Había un hombre de los fariseos que se llamaba Nicodemo, un dignatario de los judíos. 2 Este vino a Jesús de noche, y le dijo: «Rabí, sabemos que has venido de Dios como maestro; porque nadie puede hacer estas señales que tú haces, si no está Dios con él». 3 Respondió Jesús y le dijo: «De cierto, de cierto te digo, que el que no naciere de nuevo, no puede ver el reino de Dios». 4 Nicodemo le dijo: «¿Cómo puede un hombre nacer siendo viejo? ¿Puede acaso entrar por segunda vez en el vientre de su madre, y nacer?». 5 Respondió Jesús: «De cierto, de cierto te digo, que el que no naciere de agua y del Espíritu, no puede entrar en el reino de Dios. 6 Lo que es nacido de la carne, carne es; y lo que es nacido del Espíritu, espíritu es. 7 No te maravilles de que te dije: Os es necesario nacer de nuevo».',
+'Lucas 23:50-51': '50 Y hubo un varón llamado José, miembro del concilio, varón bueno y justo. 51 Este no había consentido en el acuerdo ni en la acción de los otros. Era de Arimatea, ciudad de Judea, y esperaba también él el reino de Dios.',
+'Lucas 24:44-49': '44 Y les dijo: «Estas son las palabras que os hablé, estando aún con vosotros: que era necesario que se cumpliese todo lo que está escrito de mí en la ley de Moisés, en los profetas y en los salmos». 45 Entonces les abrió el entendimiento, para que comprendiesen las Escrituras; 46 y les dijo: «Así está escrito, y así fue necesario que el Cristo padeciese, y resucitase de los muertos al tercer día; 47 y que se predicase en su nombre el arrepentimiento y el perdón de pecados en todas las naciones, comenzando desde Jerusalén. 48 Y vosotros sois testigos de estas cosas. 49 He aquí, yo enviaré la promesa de mi Padre sobre vosotros; pero quedaos vosotros en la ciudad de Jerusalén, hasta que seáis investidos de poder desde lo alto».',
+'Hechos 1:1-26': '1 Habiendo hablado antes, oh Teófilo, de todas las cosas que Jesús comenzó a hacer y a enseñar, 2 hasta el día en que fue recibido arriba, después de haber dado mandamientos por el Espíritu Santo a los apóstoles que había escogido; 3 a quienes también, después de haber padecido, se presentó vivo con muchas pruebas indubitables, apareciéndoseles durante cuarenta días y hablándoles acerca del reino de Dios.',
+'Hechos 2:1-47': '1 Cuando llegó el día de Pentecostés, estaban todos unánimes juntos. 2 Y de repente vino del cielo un estruendo como de un viento recio que soplaba, el cual llenó toda la casa donde estaban sentados; 3 y se les aparecieron lenguas repartidas, como de fuego, asentándose sobre cada uno de ellos. 4 Y fueron todos llenos del Espíritu Santo, y comenzaron a hablar en otras lenguas, según el Espíritu les daba que hablasen.',
+'Hechos 2:22-24': '22 Varones israelitas, oíd estas palabras: Jesús nazareno, varón aprobado por Dios entre vosotros con las maravillas, prodigios y señales que Dios hizo entre vosotros por medio de él, como vosotros mismos sabéis; 23 a éste, entregado por el determinado consejo y anticipado conocimiento de Dios, prendisteis y matasteis en manos de inicuos, crucificándole; 24 al cual Dios levantó, sueltos los dolores de la muerte, por cuanto era imposible que fuese retenido por ella.',
+'Hechos 2:36-41': '36 Sepa, pues, ciertísimamente toda la casa de Israel, que a este Jesús a quien vosotros crucificasteis, Dios le ha hecho Señor y Cristo. 37 Al oír esto, se compungieron de corazón, y dijeron a Pedro y a los otros apóstoles: «Varones hermanos, ¿qué haremos?». 38 Pedro les dijo: «Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo».',
+'Hechos 2:42-47': '42 Y perseveraban en la doctrina de los apóstoles, en la comunión unos con otros, en el partimiento del pan y en las oraciones. 43 Y sobrevino temor a toda persona; y muchas maravillas y señales eran hechas por los apóstoles. 44 Todos los que habían creído estaban juntos, y tenían en común todas las cosas; 45 y vendían sus propiedades y sus bienes, y lo repartían a todos según la necesidad de cada uno.',
+'Mateo 6:33': '33 Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.',
+'Isaías 59:1-2': '1 He aquí que no se ha acortado la mano de Jehová para salvar, ni se ha agravado su oído para oír; 2 pero vuestras iniquidades han hecho división entre vosotros y vuestro Dios, y vuestros pecados han hecho ocultar de vosotros su rostro para no oír.',
+'Romanos 3:23': '23 por cuanto todos pecaron, y están destituidos de la gloria de Dios.',
+'Gálatas 5:19-21': '19 Y manifiestas son las obras de la carne, que son: adulterio, fornicación, inmundicia, lascivia, 20 idolatría, hechicerías, enemistades, pleitos, celos, iras, contiendas, disensiones, herejías, 21 envidias, homicidios, borracheras, orgías, y cosas semejantes a estas; acerca de las cuales os amonesto, como ya os lo he dicho antes, que los que practican tales cosas no heredarán el reino de Dios.',
+'2 Timoteo 3:1-5': '1 También debes saber esto: que en los postreros días vendrán tiempos peligrosos. 2 Porque habrá hombres amadores de sí mismos, avaros, vanagloriosos, soberbios, blasfemos, desobedientes a los padres, ingratos, impíos, 3 sin afecto natural, implacables, sin misericordia, despiadados, calumniadores, sin dominio propio, crueles, aborrecedores de lo bueno, 4 traidores, impetuosos, infatuados, amadores de los deleites más que de Dios, 5 que tendrán apariencia de piedad, pero negarán la eficacia de ella; a éstos evita.',
+'Santiago 4:17': '17 Y al que sabe hacer lo bueno y no lo hace, le es pecado.',
+'Santiago 5:16': '16 Confesaos vuestras ofensas unos a otros, y orad unos por otros, para que seáis sanados. La oración eficaz del justo puede mucho.',
+'Romanos 6:23': '23 Porque la paga del pecado es muerte, mas la dádiva de Dios es vida eterna en Cristo Jesús Señor nuestro.',
+'2 Corintios 7:8-11': '8 Porque aunque os contristé con la carta, no me pesa, aunque antes me pesaba; porque veo que aquella carta os contristó, aunque sea por un poco. 9 Ahora me gozo, no porque hayáis sido contristados, sino porque fuisteis contristados para arrepentimiento; porque habéis sido contristados según Dios, para que ninguna pérdida padecieseis por nuestra parte.',
+'Lucas 13:1-5': '1 En este mismo tiempo estaban allí algunos que le contaban acerca de los galileos cuya sangre Pilato había mezclado con los sacrificios de ellos. 2 Respondiendo Jesús, les dijo: «¿Pensáis que estos galileos, porque padecieron tales cosas, fueron más pecadores que todos los galileos? 3 Os digo: No; antes si no os arrepentís, todos pereceréis igualmente».',
+'Colosenses 3:5-10': '5 Haced morir, pues, lo terrenal en vosotros: fornicación, impureza, pasiones desordenadas, malos deseos y avaricia, que es idolatría; 6 cosas por las cuales la ira de Dios viene sobre los hijos de desobediencia, 7 en las cuales vosotros también anduvisteis en otro tiempo cuando vivíais en ellas. 8 Pero ahora dejad también vosotros todas estas cosas: ira, enojo, malicia, blasfemia, palabras deshonestas de vuestra boca.',
+'Mateo 5:27-30': '27 Oísteis que fue dicho: No cometerás adulterio. 28 Pero yo os digo que cualquiera que mira a una mujer para codiciarla, ya adulteró con ella en su corazón. 29 Por tanto, si tu ojo derecho te es ocasión de caer, sácalo, y échalo de ti; pues mejor te es que se pierda uno de tus miembros, y no que todo tu cuerpo sea echado al infierno.',
+'Hechos 26:20': '20 sino que anuncié primeramente a los que están en Damasco, y Jerusalén, y por toda la tierra de Judea, y a los gentiles, que se arrepintiesen y se convirtiesen a Dios, haciendo obras dignas de arrepentimiento.',
+'1 Pedro 2:9-10': '9 Mas vosotros sois linaje escogido, real sacerdocio, nación santa, pueblo adquirido por Dios, para que anunciéis las virtudes de aquel que os llamó de las tinieblas a su luz admirable; 10 vosotros que en otro tiempo no erais pueblo, pero que ahora sois pueblo de Dios; que en otro tiempo no habíais alcanzado misericordia, pero ahora habéis alcanzado misericordia.',
+'Hechos 2:37': '37 Al oír esto, se compungieron de corazón, y dijeron a Pedro y a los otros apóstoles: «Varones hermanos, ¿qué haremos?».',
+'Hechos 2:38-42': '38 Pedro les dijo: «Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo. 39 Porque para vosotros es la promesa, y para vuestros hijos, y para todos los que están lejos; para cuantos el Señor nuestro Dios llamare».',
+'Romanos 6:1-8': '1 ¿Qué, pues, diremos? ¿Perseveraremos en el pecado para que la gracia abunde? En ninguna manera. 2 Porque los que hemos muerto al pecado, ¿cómo viviremos aún en él? 3 ¿O no sabéis que todos los que hemos sido bautizados en Cristo Jesús, hemos sido bautizados en su muerte? 4 Porque somos sepultados juntamente con él para muerte por el bautismo, a fin de que como Cristo resucitó de los muertos por la gloria del Padre, así también nosotros andemos en vida nueva.',
+'Colosenses 2:11-12': '11 En él también fuisteis circuncidados con circuncisión no hecha a mano, al echar de vosotros el cuerpo pecaminoso carnal, en la circuncisión de Cristo; 12 sepultados con él en el bautismo, en el cual fuisteis también resucitados con él, mediante la fe en el poder de Dios que le levantó de los muertos.',
+'Mateo 15:6-9': '6 no honrará a su padre o a su madre. Así habéis invalidado la palabra de Dios por vuestra tradición. 7 Hipócritas, bien profetizó de vosotros Isaías, cuando dijo: Este pueblo de labios me honra; Mas su corazón está lejos de mí. 8 Pues en vano me honran, Enseñando como doctrinas, mandamientos de hombres.',
+'1 Pedro 3:18-22': '18 Porque también Cristo padeció una sola vez por los pecados, el justo por los injustos, para llevarnos a Dios, siendo a la verdad muerto en la carne, pero vivificado en espíritu; 19 en el cual también fue y predicó a los espíritus encarcelados, 20 los que en otro tiempo desobedecieron, cuando una vez esperaba la paciencia de Dios en los días de Noé, mientras se preparaba el arca, en la cual pocas personas, es decir, ocho, fueron salvadas por agua.',
+'Mateo 26:31-68': '31 Entonces Jesús les dijo: Todos vosotros os escandalizaréis de mí esta noche; porque escrito está: Heriré al pastor, y las ovejas del rebaño serán dispersadas. 32 Y después que haya resucitado, iré delante de vosotros a Galilea. 33 Respondiendo Pedro, le dijo: Aunque todos se escandalicen de ti, yo nunca me escandalizaré. 34 Jesús le dijo: De cierto te digo que esta noche, antes que el gallo cante, me negarás tres veces. 35 Pedro le dijo: Aunque me sea necesario morir contigo, no te negaré. Y todos los discípulos dijeron lo mismo. 36 Entonces llegó Jesús con ellos a un lugar que se llama Getsemaní, y dijo a sus discípulos: Sentaos aquí, entre tanto que voy allí y oro. 37 Y tomando a Pedro, y a los dos hijos de Zebedeo, comenzó a entristecerse y a angustiarse en gran manera. 38 Entonces Jesús les dijo: Triste está mi alma hasta la muerte; quedaos aquí, y velad conmigo. 39 Yendo un poco adelante, se postró sobre su rostro, orando y diciendo: Padre mío, si es posible, pase de mí esta copa; pero no sea como yo quiero, sino como tú.',
+'Mateo 26:69-75': '69 Pero Pedro estaba sentado fuera en el patio; y se le acercó una criada, diciendo: Tú también estabas con Jesús el galileo. 70 Mas él negó delante de todos, diciendo: No sé lo que dices. 71 Y saliendo él a la puerta, le vio otra, y dijo a los que estaban allí: También éste estaba con Jesús nazareno. 72 Y negó otra vez con juramento: No conozco al hombre. 73 Poco después, acercándose los que estaban allí, dijeron a Pedro: Verdaderamente también tú eres de ellos, porque aun tu manera de hablar te descubre. 74 Entonces comenzó a maldecir y a jurar: No conozco al hombre. Y enseguida cantó el gallo. 75 Entonces Pedro se acordó de las palabras que Jesús le había dicho: Antes que el gallo cante, me negarás tres veces. Y saliendo de allí, lloró amargamente.',
+'Mateo 27:1-10': '1 Venida la mañana, todos los principales sacerdotes y los ancianos del pueblo entraron en consejo contra Jesús, para entregarle a muerte. 2 Y le llevaron atado, y le entregaron a Poncio Pilato, el gobernador. 3 Entonces Judas, el que le había entregado, viendo que era condenado, devolvió las treinta piezas de plata a los principales sacerdotes y a los ancianos, diciendo: Yo he pecado entregando sangre inocente. 4 Mas ellos dijeron: ¿Qué nos importa a nosotros? ¡Allá tú! Y arrojando las piezas de plata en el templo, salió, y fue y se ahorcó.',
+'Mateo 27:11-26': '11 Y fue presentado Jesús ante el gobernador; y el gobernador le preguntó, diciendo: ¿Eres tú el Rey de los judíos? Y Jesús le dijo: Tú lo dices. 12 Y siendo acusado por los principales sacerdotes y por los ancianos, no respondió nada. 13 Pilato entonces le dijo: ¿No oyes cuántas cosas testifican contra ti? Pero él no le respondió ni una palabra; de modo que el gobernador se maravillaba mucho. 14 Y viendo Pilato que nada adelantaba, sino que se hacía más alboroto, tomó agua y se lavó las manos delante del pueblo, diciendo: Inocente soy yo de la sangre de este justo; allá vosotros. 15 Y respondiendo todo el pueblo, dijo: Su sangre sea sobre nosotros, y sobre nuestros hijos. 16 Entonces les soltó a Barrabás; y después de azotar a Jesús, le entregó para ser crucificado.',
+'Mateo 27:27-56': '27 Entonces los soldados del gobernador llevaron a Jesús al pretorio, y reunieron alrededor de él a toda la compañía. 28 Y desnudándole, le echaron encima un manto de escarlata; 29 y pusieron sobre su cabeza una corona tejida de espinas, y una caña en su mano derecha; e hincando la rodilla delante de él, le escarnecían, diciendo: ¡Salve, Rey de los judíos! 30 Y escupiendo en él, tomaron la caña y le golpeaban en la cabeza. 31 Después de haberle escarnecido, le desnudaron el manto, y le vistieron sus propios vestidos, y le llevaron para crucificarle. 32 Y cuando le hubieron crucificado, repartieron entre sí sus vestidos, echando suertes; 33 y sentados le guardaban allí. 34 Y pusieron sobre su cabeza su causa escrita: ESTE ES JESUS, EL REY DE LOS JUDIOS. 35 Entonces crucificaron con él a dos ladrones, uno a la derecha y otro a la izquierda. 36 Y los que pasaban le injuriaban, meneando la cabeza y diciendo: 37 Tú, el que derribas el templo, y en tres días lo reedificas, sálvate a ti mismo; si eres Hijo de Dios, desciende de la cruz. 38 Y desde la hora sexta hubo tinieblas sobre toda la tierra hasta la hora novena. 39 Cerca de la hora novena, Jesús clamó a gran voz, diciendo: Elí, Elí, ¿lama sabactani? Esto es: Dios mío, Dios mío, ¿por qué me has desamparado? 40 Mas Jesús, habiendo otra vez clamado a gran voz, entregó el espíritu. 41 Y he aquí, el velo del templo se rasgó en dos, de arriba abajo; y la tierra tembló, y las rocas se partieron.',
+'Mateo 27:62-66': '62 Al día siguiente, que es después de la preparación, se reunieron los principales sacerdotes y los fariseos ante Pilato, 63 diciendo: Señor, nos acordamos que aquel engañador dijo, viviendo aún: Después de tres días resucitaré. 64 Manda, pues, que se asegure el sepulcro hasta el tercer día, no sea que vengan sus discípulos de noche, y lo hurten, y digan al pueblo: Resucitó de entre los muertos. 65 Y Pilato les dijo: Ahí tenéis una guardia; id y aseguradlo como sabéis. 66 Ellos fueron y aseguraron el sepulcro, sellando la piedra y poniendo la guardia.',
+'Mateo 28:1-10': '1 Pasado el día de reposo, al amanecer del primer día de la semana, vinieron María Magdalena y la otra María, a ver el sepulcro. 2 Y hubo un gran terremoto; porque un ángel del Señor, descendiendo del cielo y llegando, removió la piedra, y se sentó sobre ella. 3 Su aspecto era como un relámpago, y su vestido blanco como la nieve. 4 Y de miedo de él los guardas temblaron y se quedaron como muertos. 5 Mas el ángel, respondiendo, dijo a las mujeres: No temáis vosotras; porque yo sé que buscáis a Jesús, el que fue crucificado. 6 No está aquí, pues ha resucitado, como dijo. Venid, ved el lugar donde fue puesto el Señor. 7 Y mientras iban a dar las nuevas a los discípulos, he aquí, Jesús les salió al encuentro, diciendo: ¡Salve! Y ellas, acercándose, abrazaron sus pies, y le adoraron.',
+'Isaías 53:4-6': '4 Ciertamente llevó él nuestras enfermedades, y sufrió nuestros dolores; y nosotros le tuvimos por azotado, por herido de Dios y abatido. 5 Mas él herido fue por nuestras rebeliones, molido por nuestros pecados; el castigo de nuestra paz fue sobre él, y por su llaga fuimos nosotros curados. 6 Todos nosotros nos descarriamos como ovejas, cada cual se apartó por su camino; mas Jehová cargó en él el pecado de todos nosotros.',
+'Proverbios 13:5': '5 El justo aborrece la palabra de mentira; Mas el impío se hace odioso y confuso.',
+'1 Pedro 2:21-24': '21 Pues para esto fuisteis llamados; porque también Cristo padeció por nosotros, dejándonos ejemplo, para que sigáis sus pisadas; 22 el cual no hizo pecado, ni se halló engaño en su boca; quien cuando le maldecían, no respondía con maldición, cuando padecía, no amenazaba, sino encomendaba la causa al que juzga justamente; 23 quien llevó él mismo nuestros pecados en su cuerpo sobre el madero, para que nosotros, estando muertos a los pecados, vivamos a la justicia; y por cuya llaga fuisteis sanados.',
+'2 Corintios 5:21': '21 Al que no conoció pecado, por nosotros lo hizo pecado, para que nosotros fuésemos hechos justicia de Dios en él.',
+'Colosenses 1:15-18': '15 El es la imagen del Dios invisible, el primogénito de toda creación. 16 Porque en él fueron creadas todas las cosas, las que hay en los cielos y las que hay en la tierra, visibles e invisibles; sean tronos, sean dominios, sean principados, sean potestades; todo fue creado por medio de él y para él. 17 Y él es antes de todas las cosas, y todas las cosas en él subsisten; 18 y él es la cabeza del cuerpo que es la iglesia, él que es el principio, el primogénito de entre los muertos, para que en todo tenga la preeminencia.',
+'Efesios 2:19-22': '19 Así que ya no sois extranjeros ni advenedizos, sino conciudadanos de los santos, y miembros de la familia de Dios, 20 edificados sobre el fundamento de los apóstoles y profetas, siendo la principal piedra del ángulo Jesucristo mismo, 21 en quien todo el edificio, bien coordinado, va creciendo para ser un templo santo en el Señor.',
+'1 Corintios 12:12-13': '12 Porque así como el cuerpo es uno, y tiene muchos miembros, pero todos los miembros del cuerpo, siendo muchos, son un solo cuerpo, así también Cristo. 13 Porque por un solo Espíritu fuimos todos bautizados en un cuerpo, sean judíos o griegos, sean esclavos o libres; y a todos se nos dio a beber de un mismo Espíritu.',
+'1 Corintios 1:10-13': '10 Os ruego, pues, hermanos, por el nombre de nuestro Señor Jesucristo, que habléis todos una misma cosa, y que no haya entre vosotros divisiones, 11 sino que estéis perfectamente unidos en una misma mente y en un mismo parecer. 12 Porque digo que cada uno de vosotros dice: Yo soy de Pablo; y yo de Apolos; y yo de Cefas; y yo de Cristo. 13 ¿Acaso está dividido Cristo? ¿Fue crucificado Pablo por vosotros? ¿O fuisteis bautizados en el nombre de Pablo?',
+'Efesios 4:4-6': '4 Un cuerpo, y un Espíritu, como fuisteis también llamados en una misma esperanza de vuestra vocación; 5 un Señor, una fe, un bautismo, 6 un Dios y Padre de todos, el cual es sobre todos, y por todos, y en todos.',
+'Romanos 12:4-5': '4 Porque de la manera que en un cuerpo tenemos muchos miembros, pero no todos los miembros tienen la misma función, 5 así nosotros, siendo muchos, somos un cuerpo en Cristo, y todos miembros los unos de los otros.',
+'1 Corintios 12:14-27': '14 Además, el cuerpo no es un solo miembro, sino muchos. 15 Si dijere el pie: Porque no soy mano, no soy del cuerpo, ¿por eso no será del cuerpo? 16 Y si dijere la oreja: Porque no soy ojo, no soy del cuerpo, ¿por eso no será del cuerpo? 17 Si todo el cuerpo fuese ojo, ¿dónde estaría el oído? Si todo fuese oído, ¿dónde estaría el olfato? 18 Mas ahora Dios ha colocado los miembros cada uno de ellos en el cuerpo, como él quiso.',
+'Hebreos 10:23-25': '23 Mantengamos firme, sin fluctuar, la profesión de nuestra esperanza, porque fiel es el que prometió. 24 Y considerémonos unos a otros para estimularnos al amor y a las buenas obras; 25 no dejando de congregarnos, como algunos tienen por costumbre, sino exhortándonos; y tanto más, cuanto veis que aquel día se acerca.',
+'1 Corintios 7:39': '39 La mujer casada está ligada por la ley al marido mientras éste vive; pero si el marido muriere, libre es de casarse con quien quiera, solamente que sea en el Señor.',
+'2 Corintios 6:14-18': '14 No os unáis en yugo desigual con los incrédulos; porque ¿qué compañerismo tiene la justicia con la injusticia? ¿Y qué comunión la luz con las tinieblas? 15 ¿Y qué concordia Cristo con Belial? ¿O qué parte el creyente con el incrédulo?',
+'1 Corintios 16:1-2': '1 En cuanto a la ofrenda para los santos, haced vosotros también de la manera que ordené en las iglesias de Galacia. 2 Cada primer día de la semana cada uno de vosotros ponga aparte algo, según haya prosperado.',
+'2 Corintios 9:6-8': '6 Pero esto digo: El que siembra escasamente, también segará escasamente; y el que siembra generosamente, generosamente también segará. 7 Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre.',
+'Hechos 13:47': '47 Porque así nos ha mandado el Señor, diciendo: Te he puesto para luz de los gentiles, A fin de que seas para salvación hasta lo postrero de la tierra.',
+'Números 27:12-18': '12 Y Jehová dijo a Moisés: Sube a este monte de Abarim, y verás la tierra que he dado a los hijos de Israel. 13 Y cuando la hubieres visto, también tú serás reunido con tu pueblo, como fue reunido tu hermano Aarón.',
+'1 Corintios 4:15-17': '15 Porque aunque tengáis diez mil ayos en Cristo, no tendréis muchos padres; pues en Cristo Jesús yo os engendré por medio del evangelio. 16 Por tanto, os ruego que me imitéis.',
+'2 Timoteo 3:14-17': '14 Pero persiste tú en lo que has aprendido y te persuadiste, sabiendo de quién has aprendido; 15 y que desde la niñez has sabido las Sagradas Escrituras, las cuales te pueden hacer sabio para la salvación por la fe que es en Cristo Jesús.',
+'Génesis 2:19': '19 Jehová Dios formó, pues, de la tierra toda bestia del campo, y toda ave de los cielos, y las trajo a Adán para que viese cómo las había de llamar; y todo lo que Adán llamó a los animales vivientes, ese es su nombre.',
+'Marcos 7:20-22': '20 Pero lo que sale del hombre, eso es lo que contamina al hombre. 21 Porque de dentro, del corazón de los hombres, salen los malos pensamientos, los adulterios, las fornicaciones, 22 los homicidios, los hurtos, las avaricias, las maldades, el engaño, la lascivia, la envidia, la maledicencia, la soberbia, la insensatez.',
+'Efesios 5:1-7': '1 Sed, pues, imitadores de Dios como hijos amados. 2 Y andad en amor, como también Cristo nos amó, y se entregó a sí mismo por nosotros, ofrenda y sacrificio a Dios en olor fragante. 3 Pero fornicación y toda inmundicia, o avaricia, ni aun se nombre entre vosotros, como conviene a santos;',
+'1 Corintios 6:7-10': '7 Así que, por cierto es ya una falta que tengáis pleitos entre vosotros mismos. ¿Por qué no sufrís más bien el agravio? ¿Por qué no sufrís más bien el ser defraudados? 8 ¿O no sabéis que los injustos no heredarán el reino de Dios? No erréis; ni los fornicarios, ni los idólatras, ni los adúlteros, ni los afeminados, ni los que se echan con varones, 9 ni los ladrones, ni los avaros, ni los borrachos, ni los maldicientes, ni los estafadores, heredarán el reino de Dios.',
+'Juan 19:34': '34 Pero uno de los soldados le abrió el costado con una lanza, y al instante salió sangre y agua.',
+'Salmo 22:14': '14 He sido derramado como aguas, Y todos mis huesos se descoyuntaron; Mi corazón fue como cera, Derritiéndose en medio de mis entrañas.',
+'Juan 19': '1 Entonces Pilato tomó a Jesús, y le azotó. 2 Y los soldados pusieron una corona de espinas sobre su cabeza, y le vistieron con un manto de púrpura; 3 y le decían: ¡Salve, Rey de los judíos! y le daban de bofetadas.',
+'1 Timoteo 3:15': '15 para que si tardo, sepas cómo debes conducirte en la casa de Dios, que es la iglesia del Dios viviente, columna y baluarte de la verdad.',
+'Romanos 6:3-4': '3 ¿O no sabéis que todos los que hemos sido bautizados en Cristo Jesús, hemos sido bautizados en su muerte? 4 Porque somos sepultados juntamente con él para muerte por el bautismo, a fin de que como Cristo resucitó de los muertos por la gloria del Padre, así también nosotros andemos en vida nueva.'
+};
+/* ── MODAL SYSTEM ───────────────────────────────── */
+function openModal(ref) {
+var modal = document.getElementById('verseModal');
+var title = document.getElementById('modalTitle');
+var verse = document.getElementById('modalVerse');
+title.textContent = ref;
+verse.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);">Cargando...</div>';
+modal.classList.add('active');
+document.body.style.overflow = 'hidden';
+setTimeout(function(){
+if (verses[ref]) {
+verse.textContent = verses[ref];
+} else {
+verse.innerHTML = '<p style="color:var(--muted);text-align:center;font-style:normal;">Versículo no disponible offline.<br><br><a href="https://www.biblegateway.com/passage/?search=' + encodeURIComponent(ref) + '&version=NVI" target="_blank" style="color:var(--gold);text-decoration:underline;">Leer ' + ref + ' en Bible Gateway (NVI) →</a></p>';
+}
+}, 150);
+}
+function closeModal(e) {
+if (e && e.target !== e.currentTarget) return;
+document.getElementById('verseModal').classList.remove('active');
+document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+/* ── SCROLL REVEAL ────────────────────────────────────── */
+function initReveal() {
+var observer = new IntersectionObserver(function(entries) {
+entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+}
+/* ── STATE ───────────────────────────────────────────── */
+function sGet(k,d){try{var x=localStorage.getItem(k);return x?JSON.parse(x):d;}catch(e){return d;}}
+function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+var S={cur:-1,done:sGet('ici_done',[])};
+/* ── BUILD UI ───────────────────────────────────────────── */
+function buildSB(){
+document.getElementById('sbList').innerHTML=PP.map(function(p,i){
+var done=S.done.indexOf(p.id)!==-1;
+return '<div class="sb-item'+(done?' done':'')+(S.cur===i?' active':'')+'" id="si'+i+'" onclick="go('+i+')"><div class="sb-num">'+(done?'✓':p.id)+'</div><div class="sb-text"><div class="sb-title">'+p.titulo+'</div><div class="sb-desc">'+p.icono+' '+p.desc.substring(0,40)+'...</div></div></div>';
+}).join('');
+}
+function buildW(){
+document.getElementById('wGrid').innerHTML=PP.map(function(p,i){
+return '<div class="w-card" onclick="go('+i+')"><div class="w-cnum">PRINCIPIO '+p.id+'</div><div class="w-ctitle">'+p.icono+' '+p.titulo+'</div></div>';
+}).join('');
+}
+function buildPP(){
+document.getElementById('pCont').innerHTML=PP.map(function(p,i){
+var vid=p.vid?'<div class="video-outer"><div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/'+p.vid+'?rel=0" title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div><a class="vid-ext-btn" href="https://www.youtube.com/watch?v='+p.vid+'" target="_blank">▶ Ver en YouTube</a></div>':'<div class="video-outer"><div class="video-wrap"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:20px;"><div><div style="font-size:42px;opacity:.3;margin-bottom:10px;">▶</div><div style="font-size:13px;">Video Tutorial próximamente</div></div></div></div></div>';
+var done=S.done.indexOf(p.id)!==-1;
+return '<div class="pview" id="pv'+i+'"><div class="hero"><div class="hero-glow" style="background:radial-gradient(ellipse at 72% 50%,'+p.color+'18 0%,transparent 65%);"></div><div class="hero-grad"></div><div class="hero-n">✦ Principio '+p.id+' de '+PP.length+'</div><span class="hero-ico">'+p.icono+'</span><h1 class="hero-h">'+p.titulo+'</h1><p class="hero-d">'+p.desc+'</p><div class="hero-line" style="background:'+p.color+';"></div></div><div class="pbody">'+p.html+'<div class="slabel"><div class="slabel-ico">🎬</div><div class="slabel-txt">Video Tutorial</div><div class="sdiv"></div></div>'+vid+'</div><div class="navfoot"><button class="nbtn" onclick="go('+(i-1)+')"'+(i===0?' disabled':'')+'>← Anterior</button><div class="ncenter"><button class="cbtn'+(done?' done':'')+'" id="cb'+i+'" onclick="markDone('+p.id+','+i+')">'+(done?'✓ Completado':'Marcar completado')+'</button></div><button class="nbtn primary" onclick="'+(i<PP.length-1?'go('+(i+1)+')':'go(-1)')+'">'+(i<PP.length-1?'Siguiente →':'Inicio')+'</button></div></div>';
+}).join('');
+}
+/* ── NAVIGATION ───────────────────────────────────────── */
+function go(idx){
+document.getElementById('welcome').style.display='none';
+document.querySelectorAll('.pview').forEach(function(v){v.classList.remove('active');});
+document.querySelectorAll('.sb-item').forEach(function(s){s.classList.remove('active');});
+if(idx===-1){document.getElementById('welcome').style.display='flex';S.cur=-1;return;}
+var v=document.getElementById('pv'+idx);
+if(v){v.classList.add('active');S.cur=idx;setTimeout(initReveal,100);}
+var si=document.getElementById('si'+idx);
+if(si)si.classList.add('active');
+window.scrollTo(0,0);
+if(window.innerWidth<768){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('active');document.querySelector('.menubtn').classList.remove('active');}
+}
+function markDone(id,idx){
+if(S.done.indexOf(id)===-1){S.done.push(id);sSet('ici_done',S.done);}
+var cb=document.getElementById('cb'+idx);
+if(cb){cb.textContent='✓ Completado';cb.classList.add('done');}
+var si=document.getElementById('si'+idx);
+if(si){si.classList.add('done');si.querySelector('.sb-num').textContent='✓';}
+updProg();
+}
+function updProg(){
+var d=S.done.length,t=PP.length,p=Math.round(d/t*100);
+document.getElementById('sFill').style.width=p+'%';
+document.getElementById('sPct').textContent=p+'%';
+document.getElementById('hFill').style.width=p+'%';
+document.getElementById('hLbl').textContent=d+' / '+t;
+}
+/* ── MOBILE NAVIGATION FIX ───────────────────────────────── */
+function toggleSB(){
+var sidebar = document.getElementById('sidebar');
+var overlay = document.getElementById('overlay');
+var menubtn = document.querySelector('.menubtn');
+sidebar.classList.toggle('open');
+overlay.classList.toggle('active');
+menubtn.classList.toggle('active');
+if(window.innerWidth < 768){
+document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+}
+/* ── THEME ───────────────────────────────────────────── */
+function toggleTheme(){var isLight=document.body.classList.toggle('light');var btn=document.getElementById('themeBtn');if(btn)btn.textContent=isLight?'☀️':'';try{localStorage.setItem('ici_theme',isLight?'light':'dark');}catch(e){}}
+/* ── PWA ──────────────────────────────────────────────── */
+var deferredPrompt=null,installBanner=document.getElementById('installBanner');
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(installBanner)setTimeout(function(){installBanner.classList.add('show');},3000);});
+window.installApp=function(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;closeInstallBanner();});}};
+window.closeInstallBanner=function(){if(installBanner)installBanner.classList.remove('show');};
+var offBar=document.getElementById('offlineBar');
+function checkOnline(){if(offBar)offBar.classList.toggle('show',!navigator.onLine);}
+window.addEventListener('online',checkOnline);window.addEventListener('offline',checkOnline);
+/* ── INIT ───────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded',function(){
+buildSB();buildW();buildPP();updProg();
+var saved;try{saved=localStorage.getItem('ici_theme');}catch(e){}if(saved==='light'){document.body.classList.add('light');var btn=document.getElementById('themeBtn');if(btn)btn.textContent='☀️';}
+document.getElementById('overlay').classList.remove('active');
+document.querySelector('.menubtn').classList.remove('active');
+});
+window.addEventListener('resize', function(){
+if(window.innerWidth >= 768){
+document.getElementById('sidebar').classList.remove('open');
+document.getElementById('overlay').classList.remove('active');
+document.querySelector('.menubtn').classList.remove('active');
+document.body.style.overflow = '';
+}
+});
+/* ── DATA ───────────────────────────────────────────────── */
+var PP = [
+{id:1,titulo:'Buscando a Dios',icono:'🔍',color:'#C9A96E',vid:'pfqrbbY-hYc',desc:'Descubriendo lo que significa buscar una relación con Dios con todo nuestro corazón.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Determinar lo que significa buscar una relación con Dios con todo nuestro corazón.<br><br><strong style="font-family:'Lato',sans-serif;font-size:14px;color:#E8C98A;">Pregunta introductoria:</strong> ¿Qué buscas en la vida? ¿Qué estás buscando con todo tu corazón?</p></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Escrituras y Análisis</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Salmo 119:1-2')">Salmo 119:1-2</div></div><div class="sc-body"><div class="sc-qm">"</div><p class="sc-verse">"1 Dichosos los que son intachables en su conducta, los que viven conforme a la ley del Señor. 2 Dichosos los que cumplen sus estatutos y lo buscan de todo corazón."</p><ul class="sc-pts"><li>"Dichoso" es un término que no usamos a menudo. ¿Sabes lo que significa? (¡Estar muy feliz!)</li><li>¿Qué significa ser intachable? (Ser irreprochable y hacer lo que es correcto.)</li><li class="q">En una escala del 1 (sin esfuerzo) al 10 (con todo tu corazón), ¿cómo describirías tus esfuerzos para buscar a Dios?</li><li>Para buscar a Dios, debes buscar Su Palabra (la Biblia) con todo tu corazón.</li><li>¿Cómo buscamos a Dios? (Guardando Sus estatutos.)</li><li>Cuando buscas a Dios con todo tu corazón, ¡el resultado es la felicidad!</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 6:25-34')">Mateo 6:25-34</div></div><div class="sc-body"><ul class="sc-pts"><li>Muchas personas no buscan a Dios porque no creen que Él tenga el poder de cambiar sus vidas.</li><li class="q">¿Cuáles son algunas áreas en tu vida por las que sientes la tentación de preocuparte?</li><li class="q">¿Qué significa "buscar primero Su reino y Su justicia"?</li><li class="q">¿Qué promete Dios si lo haces?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 17:24-28')">Hechos 17:24-28</div></div><div class="sc-body"><ul class="sc-pts"><li class="q">¿Qué está haciendo Dios para desarrollar una relación con la gente?</li><li>¿Por qué Dios se toma tantas molestias? Para que la gente pueda buscarlo y tener una relación genuina con Él.</li><li class="q">¿Quieres una relación más profunda con Dios? Si no, ¿por qué?</li><li>Conocer a un cristiano no es una coincidencia. Dios tiene un gran plan para tu vida.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Juan 4:23-24')">Juan 4:23-24</div></div><div class="sc-body"><ul class="sc-pts"><li class="q">¿Qué hace un verdadero adorador de Dios?</li><li>Dios está buscando a aquellos que quieren adorarlo en espíritu y en verdad.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Jeremías 29:11-13')">Jeremías 29:11-13</div></div><div class="sc-body"><ul class="sc-pts"><li>En este pasaje, Dios comparte Su visión para Su pueblo.</li><li>Dios quiere darnos una esperanza y un futuro, pero primero debemos acercarnos a Él.</li><li>La oración es cómo buscamos a Dios.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 8:26-39')">Hechos 8:26-39 — El eunuco etíope</div></div><div class="sc-body"><ul class="sc-pts"><li>Un estudio de caso de alguien que busca a Dios.</li><li><strong style="color:#E8C98A;">Sacrificio:</strong> Viajó 1500 millas desde Etiopía a Jerusalén.</li><li><strong style="color:#E8C98A;">Humildad:</strong> Escuchó humildemente a alguien capaz de enseñarle.</li><li><strong style="color:#E8C98A;">Obediencia:</strong> Respondió inmediatamente.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 7:7-8')">Mateo 7:7-8</div></div><div class="sc-body"><ul class="sc-pts"><li>Si buscas a Dios en oración, ¡lo encontrarás!</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">Ora y lee la Biblia diariamente. El libro de Juan es un excelente lugar para empezar.</p></div>`},
+{id:2,titulo:'La Palabra de Dios',icono:'📖',color:'#A07856',vid:'mAtWiUAb66Y',desc:'Examinando por qué la Biblia es de Dios y por qué debe ser el estándar para nuestras vidas.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Ayudarte a decidir hacer de la Biblia el estándar para tu vida.<br><br><strong style="font-family:'Lato',sans-serif;font-size:14px;color:#E8C98A;">Pregunta:</strong> ¿Crees que es la divina Palabra de Dios?</p></div>
+<div class="facts-box reveal"><h4>✦ Hechos sobre la Biblia</h4><ul><li>40 autores de 66 libros diferentes.</li><li>400 profecías acerca de Jesús cumplidas.</li><li>Más de 40,000 copias antiguas.</li></ul></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Escrituras y Análisis</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('2 Timoteo 3:16-17')">2 Timoteo 3:16-17</div></div><div class="sc-body"><p class="sc-verse">"16 Toda la Escritura es inspirada por Dios y útil para enseñar, para reprender, para corregir y para instruir en la justicia, 17 a fin de que el siervo de Dios esté enteramente capacitado para toda buena obra."</p><ul class="sc-pts"><li class="q">¿Crees que toda la Escritura proviene de Dios?</li><li>La Biblia es un estándar, ¿estás listo para convertirla en el estándar para tu vida?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hebreos 4:12-13')">Hebreos 4:12-13</div></div><div class="sc-body"><p class="sc-verse">"12 Porque la palabra de Dios es viva y eficaz. Más cortante que cualquier espada de dos filos, penetra hasta dividir alma y espíritu, coyunturas y médulas, y discierne los pensamientos y las intenciones del corazón. 13 No hay nada creado que pueda esconderse de Dios; al contrario, todo está desnudo y expuesto ante los ojos de aquel a quien tenemos que rendir cuentas."</p><ul class="sc-pts"><li>La Palabra de Dios expone el corazón humano.</li><li class="q">¿Estás dispuesto a permitir que la Biblia corte tu corazón para que puedas ser sanado?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('2 Pedro 1:19-21')">2 Pedro 1:19-21 — Interpretación</div></div><div class="sc-body"><ul class="sc-pts"><li><strong style="color:#E8C98A;">1. INTERPRETACIÓN:</strong> La Biblia está destinada a ser leída y aplicada, no a ser cambiada para que se ajuste a nuestras opiniones.</li><li><strong style="color:#E8C98A;">2. EMOCIONES — <span class="sc-ref" onclick="openModal('Juan 8:31-32')">Juan 8:31-32</span>:</strong> Las emociones individuales y la racionalización de la Biblia pueden alejarte de la verdad.</li><li class="q">¿Qué Escrituras te resultan difíciles de obedecer?</li><li><strong style="color:#E8C98A;">3. TRADICIONES — <span class="sc-ref" onclick="openModal('Marcos 7:1-13')">Marcos 7:1-13</span>:</strong> Debemos tomar la decisión de seguir la verdad de la Palabra de Dios por encima de la tradición religiosa o cultural.</li><li class="q">¿Conoces algún ejemplo de tradiciones religiosas que desobedecen la Palabra de Dios?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('1 Timoteo 4:16')">1 Timoteo 4:16</div></div><div class="sc-body"><ul class="sc-pts"><li class="q">¿Qué es más importante, la vida o la doctrina? Ambas son igualmente importantes.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 17:10-11')">Hechos 17:10-11</div></div><div class="sc-body"><ul class="sc-pts"><li>¿Quieres tener un carácter noble? Entonces, ¿qué necesitas hacer?</li><li>Examinar con diligencia las Escrituras todos los días.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Santiago 1:22-25')">Santiago 1:22-25</div></div><div class="sc-body"><ul class="sc-pts"><li>Escuchar sin intentar cambiar conduce al autoengaño.</li><li>La Palabra de Dios es un espejo: revela nuestro carácter para que podamos cambiarlo.</li><li class="q">¿Estás dispuesto a fijarte atentamente en la Biblia para que puedas cambiar?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Juan 12:48')">Juan 12:48</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús dice que Su Palabra nos juzgará.</li><li>La Biblia es el estándar de Dios, ¿será tu estándar?</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">¡Examina con diligencia las Escrituras todos los días para que puedas hacer de la Palabra de Dios tu estándar para la vida!</p></div>`},
+{id:3,titulo:'Discipulado',icono:'🤝',color:'#7A9E87',vid:'r0hQ7UJprfo',desc:'Definiendo bíblicamente lo que es un verdadero cristiano.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Entender lo que significa ser un discípulo de Jesús.<br><br><strong style="font-family:'Lato',sans-serif;font-size:14px;color:#E8C98A;">Pregunta:</strong> ¿Qué piensas que es un discípulo? Un estudiante y un seguidor.</p></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Escrituras y Análisis</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 28:18-20')">Mateo 28:18-20</div></div><div class="sc-body"><div class="sc-qm">"</div><p class="sc-verse">"18 Jesús se acercó a ellos y les dijo: “Se me ha dado toda autoridad en el cielo y en la tierra. 19 Por tanto, vayan y hagan discípulos de todas las naciones, bautizándolos en el nombre del Padre y del Hijo y del Espíritu Santo, 20 y enseñándoles a obedecer todo lo que les he mandado a ustedes. Y recuerden: yo estoy con ustedes siempre, hasta el fin del mundo”."</p><ul class="sc-pts"><li class="q">¿Cuál es el deseo de Jesús para cada persona? Convertirse en Su discípulo.</li><li class="q">¿Ha sido tu misión de vida hacer discípulos de todas las naciones?</li><li>Necesitas ser enseñado — ser hecho discípulo.</li><li>¡Los discípulos hacen discípulos, bautizan discípulos y enseñan a otros discípulos a obedecer!</li><li class="q">¿Es así como has estado viviendo?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 11:25-26')">Hechos 11:25-26 — Discípulos = Cristianos</div></div><div class="sc-body"><ul class="sc-pts"><li>¿Qué término es más popular — discípulo o cristiano? Jesús nunca usó el término "cristiano" para definir a Sus seguidores.</li><li><strong style="color:#E8C98A;">Discípulos de Jesús = Cristianos = Salvos.</strong></li><li>La palabra "cristiano" solo aparece tres veces en el Nuevo Testamento.</li><li>La palabra "discípulo" aparece más de 270 veces en el Nuevo Testamento.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Marcos 1:14-18')">Marcos 1:14-18</div></div><div class="sc-body"><ul class="sc-pts"><li>Este es el llamado de los primeros discípulos.</li><li>¡Los discípulos responden inmediatamente cuando son llamados!</li><li>El llamado de un discípulo fue sacrificial — dejaron caer sus "redes."</li><li class="q">¿Es así como has estado viviendo?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Lucas 9:23-26')">Lucas 9:23-26</div></div><div class="sc-body"><ul class="sc-pts"><li>El llamado para todas las personas es poner la voluntad de Dios por encima de la suya.</li><li>Un discípulo "se niega a sí mismo" y toma su cruz cada día.</li><li class="q">¿Es así como has estado viviendo?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Lucas 14:25-33')">Lucas 14:25-33</div></div><div class="sc-body"><ul class="sc-pts"><li>No podemos servir a dos señores — Dios debe ser claramente el primero.</li><li>¿Puedes pagar el costo para ser un discípulo?</li><li class="q">¿Es así como has estado viviendo?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Lucas 11:1-4')">Lucas 11:1-4</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús da a Sus discípulos un modelo para la oración.</li><li>Debemos tener una relación personal diaria con Dios.</li><li class="q">¿Es así como has estado viviendo?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 22:34-40')">Mateo 22:34-40</div></div><div class="sc-body"><ul class="sc-pts"><li>¿Qué espera Dios cuando se trata de amarlo?</li><li>Somos llamados a amar a Dios y a amar a nuestro prójimo.</li><li>El amor es la base de la Biblia. ¿Deseas amar a Dios de esta manera?</li></ul></div></div>
+</div>
+<div class="facts-box reveal" style="margin-top:24px;"><h4>✦ El poder multiplicador del discipulado</h4><ul><li><strong>Año 1:</strong> 1 ministro → 1 discípulo (2 personas)</li><li><strong>Año 2:</strong> 730 ministros → 4 discípulos</li><li><strong>Año 3:</strong> 1,095 ministros → 8 discípulos</li><li><strong>Año 13:</strong> 4,745 ministros → 8,192 discípulos</li><li><strong>Año 33:</strong> 12,045 ministros → ¡más de 8 mil millones de discípulos!</li></ul></div>
+<div class="sc-list" style="margin-top:20px;"><div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref">Preguntas Finales</div></div><div class="sc-body"><ul class="sc-pts"><li class="q">¿Te definiría Jesús como Su discípulo?</li><li class="q">Como resultado, ¿eres cristiano — según las Escrituras?</li><li class="q">¿Eres salvo hoy — según las Escrituras?</li></ul></div></div></div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">¡Comienza a compartir tu fe hoy! ¡Eres bienvenido a unirte a nosotros en nuestro servicio de adoración!</p></div>`},
+{id:4,titulo:'La Venida del Reino',icono:'👑',color:'#8A7BAE',vid:'ZLppk7dIdjI',desc:'Comprendiendo qué es el reino de Dios y cuándo llegó.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Descubrir el propósito del reino de Dios en la tierra.</p></div>
+<div class="facts-box reveal"><h4>✦ Seis preguntas clave</h4><ul><li>¿Qué es el reino de Dios?</li><li>¿Cuándo vino el reino de Dios — si es que vino?</li><li>¿Cómo entra uno en el reino?</li><li>¿Encajan el Antiguo Testamento y el Nuevo Testamento?</li><li>¿Es importante si voy a la iglesia?</li><li>¿Es importante a qué iglesia voy?</li></ul></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Predicciones del Antiguo Testamento sobre el Reino</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Isaías 2:1-4')">Isaías 2:1-4 (750 A.C.)</div></div><div class="sc-body"><ul class="sc-pts"><li>En los últimos días, el "monte del templo del Señor" será establecido.</li><li>Todas las naciones irán a él.</li><li>La gente será instruida en Sus caminos.</li><li>La palabra del Señor saldrá de Jerusalén.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Daniel 2:31-45')">Daniel 2:31-45 (550 A.C.)</div></div><div class="sc-body"><ul class="sc-pts"><li>Gran estatua — representa una línea de tiempo de eventos:</li><li><strong style="color:#E8C98A;">Cabeza de oro:</strong> Babilonios (605 A.C. a 539 A.C.)</li><li><strong style="color:#E8C98A;">Pecho y brazos de plata:</strong> Medo-Persas (539 A.C. a 331 A.C.)</li><li><strong style="color:#E8C98A;">Vientre y muslos de bronce:</strong> Griegos (331 A.C. a 63 A.C.)</li><li><strong style="color:#E8C98A;">Piernas de hierro y pies de barro:</strong> Romanos (63 A.C. a 476 D.C.)</li><li>Una roca golpea la estatua en los pies de hierro y barro — durante el último tiempo del dominio romano.</li><li class="q">¿Cuándo exactamente crees que vino el reino de Dios?</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Predicciones del Nuevo Testamento sobre el Reino</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 3:1-2')">Mateo 3:1-2 (25 D.C.)</div></div><div class="sc-body"><ul class="sc-pts"><li>Juan el Bautista declara que el reino está cerca.</li><li>Jesús ya había nacido (Juan el Bautista era seis meses mayor).</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 4:17')">Mateo 4:17 (27 D.C.)</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús comienza su ministerio y declara que el reino está cerca.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 16:13-19')">Mateo 16:13-19</div></div><div class="sc-body"><ul class="sc-pts"><li>Pedro recibe las llaves del reino de Dios.</li><li>"Pedro" en griego es petros, que significa "piedra pequeña."</li><li>"Roca" en griego es petra, que significa "gran roca fundamental."</li><li>¿A qué se refiere la "roca" en este pasaje? ¡Jesús!</li><li><strong style="color:#E8C98A;">¡La iglesia es el reino de Dios en la tierra! Reino = Iglesia.</strong></li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Marcos 9:1')">Marcos 9:1</div></div><div class="sc-body"><ul class="sc-pts"><li>Algunos no "sufrirán la muerte" — o morirán — antes de que venga el reino de Dios.</li><li>El reino vendrá "con poder."</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Juan 3:1-7')">Juan 3:1-7</div></div><div class="sc-body"><ul class="sc-pts"><li>Para entrar en el reino, debemos "nacer del agua y del Espíritu."</li><li>¿Qué significa "nacer de nuevo"?</li><li>¿Ha venido ya el reino?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Lucas 23:50-51')">Lucas 23:50-51</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús ha muerto, pero el reino aún no había venido.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Lucas 24:44-49')">Lucas 24:44-49</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús ha resucitado, pero el reino aún no había venido.</li><li>Aquí hay cuatro pistas sobre cómo entrar en el reino.</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Cumplimiento</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 1:1-26')">Hechos 1:1-26</div></div><div class="sc-body"><ul class="sc-pts"><li>Durante 40 días después de Su resurrección, Jesús habló a Sus discípulos sobre el reino.</li><li>Las profecías comienzan a cumplirse en Hechos 1 y 2.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 2:1-47')">Hechos 2:1-47</div></div><div class="sc-body"><ul class="sc-pts"><li>Pedro destaca tres pistas de Lucas 24:44-49:</li><li>Poder de lo alto (versículos 1-4)</li><li>Jerusalén (versículo 5)</li><li>Cada nación (versículo 5)</li><li>"Últimos días" (versículo 17)</li><li>¿Ha venido ya el reino?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 2:22-24')">Hechos 2:22-24</div></div><div class="sc-body"><ul class="sc-pts"><li>Pedro predica las "llaves" esenciales del reino:</li><li>Jesús viene de Dios;</li><li>Nuestros pecados lo llevaron a la Cruz;</li><li>¡Él resucitó de entre los muertos!</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 2:36-41')">Hechos 2:36-41</div></div><div class="sc-body"><ul class="sc-pts"><li>Arrepentimiento y perdón de pecados (verso 38) — ¡la respuesta bíblica para entrar en el reino!</li><li>¡El reino de Dios ha venido! ¡Tres mil personas "nacieron de nuevo del agua y del Espíritu!"</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 2:42-47')">Hechos 2:42-47</div></div><div class="sc-body"><ul class="sc-pts"><li>Este es el modelo para la iglesia.</li><li>Como los discípulos del primer siglo, debemos estar dedicados a la Biblia, la oración, la confraternidad y la comunión.</li><li class="q">¿Es importante a qué iglesia vamos? ¡Sí!</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 6:33')">Mateo 6:33</div></div><div class="sc-body"><ul class="sc-pts"><li>Debemos buscar primero el reino.</li><li>¡Debemos estar dispuestos a sacrificarnos para poner la iglesia primero en nuestras vidas!</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">Busca primero el reino comprometiéndote con la confraternidad de los discípulos — ¡la iglesia!</p></div>`},
+{id:5,titulo:'Pecado y Arrepentimiento',icono:'⚖️',color:'#A07060',vid:'V6ZsKYtx_D8',desc:'Examinando qué es el pecado, cómo daña a Dios y cómo desarrollar el dolor piadoso para arrepentirse por completo.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Demostrar nuestro amor a Dios entendiendo por qué necesitamos odiar el pecado y arrepentirnos de él.</p></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">El Pecado</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Isaías 59:1-2')">Isaías 59:1-2</div></div><div class="sc-body"><ul class="sc-pts"><li>Pecado es un término que proviene del tiro con arco y significa <strong style="color:#F0EAD6;">"errar el blanco"</strong>.</li><li>El pecado nos separa de Dios.</li><li class="q">¿Estás en la oscuridad o en la luz en este momento? ¿Cómo lo sabes?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Romanos 3:23')">Romanos 3:23</div></div><div class="sc-body"><ul class="sc-pts"><li>Todos han pecado y están privados de la gloria de Dios.</li><li>¿Quiénes han pecado contra Dios? Todos, sin importar cuán "pequeño" pueda parecer un pecado.</li><li class="q">¿Qué persona está más lejos de Dios: una persona que peca un poco o mucho?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Gálatas 5:19-21')">Gálatas 5:19-21</div></div><div class="sc-body"><ul class="sc-pts"><li>Pecado significa "errar el blanco". Los pecados de la naturaleza pecaminosa son obvios.</li><li class="q">¿De cuáles de estos pecados necesitas arrepentirte hoy?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('2 Timoteo 3:1-5')">2 Timoteo 3:1-5</div></div><div class="sc-body"><ul class="sc-pts"><li>Estos son pecados del corazón. Algunos pecados son descarados; otros son más engañosos.</li><li class="q">¿De cuáles de estos pecados necesitas arrepentirte?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Santiago 4:17')">Santiago 4:17</div></div><div class="sc-body"><ul class="sc-pts"><li>Saber lo que es correcto y no hacerlo también es pecado: <strong style="color:#F0EAD6;">el pecado de omisión</strong>.</li><li class="q">¿Necesitas arrepentirte de esto?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Santiago 5:16')">Santiago 5:16</div></div><div class="sc-body"><ul class="sc-pts"><li>Estamos llamados a confesar nuestros pecados unos a otros.</li><li>La oración es poderosa y efectiva.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Romanos 6:23')">Romanos 6:23</div></div><div class="sc-body"><div class="sc-qm">"</div><p class="sc-verse">"23 Porque la paga del pecado es muerte, mas la dádiva de Dios es vida eterna en Cristo Jesús Señor nuestro."</p><ul class="sc-pts"><li>Cuando pecamos, ganamos la muerte eterna.</li><li>¿Qué quiere darte Dios? ¡El regalo de la vida eterna!</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">🔄</div><div class="slabel-txt">El Arrepentimiento</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('2 Corintios 7:8-11')">2 Corintios 7:8-11</div></div><div class="sc-body"><ul class="sc-pts"><li>No puedes arrepentirte sin tener un <strong style="color:#F0EAD6;">dolor piadoso</strong>.</li><li>La respuesta al pecado es el arrepentimiento. (Griego — "metanoia" — cambio de mente)</li><li>Un cambio de mente debe conducir a un cambio en las acciones.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Lucas 13:1-5')">Lucas 13:1-5</div></div><div class="sc-body"><ul class="sc-pts"><li>A menos que una persona se arrepienta, corre peligro de condenación eterna.</li><li>¡Debemos arrepentirnos, o pereceremos!</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Colosenses 3:5-10')">Colosenses 3:5-10</div></div><div class="sc-body"><ul class="sc-pts"><li class="q">¿Estás listo para matar estos pecados de una vez por todas?</li><li>La ira de Dios se acerca, ¡así que libérate de la esclavitud del pecado!</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 5:27-30')">Mateo 5:27-30</div></div><div class="sc-body"><ul class="sc-pts"><li>Debemos ser radicales al eliminar las cosas que nos hacen pecar.</li><li>El objetivo es una <strong style="color:#F0EAD6;">transformación del corazón</strong>.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 26:20')">Hechos 26:20</div></div><div class="sc-body"><ul class="sc-pts"><li>¡Demostramos nuestro arrepentimiento con nuestras obras!</li><li class="q">¿Cuál es tu plan para arrepentirte de los pecados en tu vida?</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">Ten un plan claro de arrepentimiento, que aborde tanto los pecados de comisión como los de omisión.</p></div>`},
+{id:6,titulo:'Luz y Oscuridad',icono:'🌗',color:'#5B7A9A',vid:'y5a5tM9iBgY',desc:'Un estudio exhaustivo de lo que significa pasar de la oscuridad del pecado a la luz de la salvación.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Entender cómo ser salvo.<br><br><strong style="font-family:'Lato',sans-serif;font-size:14px;color:#E8C98A;">Preguntas:</strong> ¿Cuándo crees que fuiste salvo? ¿Cuándo recibiste el Espíritu Santo?</p></div>
+<div class="facts-box reveal"><h4>✦ Oscuridad vs. Luz — <span class="sc-ref" onclick="openModal('1 Pedro 2:9-10')">1 Pedro 2:9-10</span></h4><ul><li><strong style="color:#888;">OSCURIDAD:</strong> No Pueblo de Dios · Sin Misericordia · Perdido</li><li><strong style="color:#C9A96E;">LUZ:</strong> Pueblo de Dios · Misericordia · Salvo · Cristiano · Discípulo</li><li>Cada persona está ya sea en la oscuridad o en la luz. <strong style="color:#F0EAD6;">No existe una zona intermedia.</strong></li></ul></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Escrituras y Análisis</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Juan 3:1-7')">Juan 3:1-7</div></div><div class="sc-body"><ul class="sc-pts"><li>Debemos nacer de nuevo del agua y del Espíritu.</li><li>Esta es una decisión personal como adulto.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 2:22-24')">Hechos 2:22-24</div></div><div class="sc-body"><ul class="sc-pts"><li><strong>¿Qué mensaje debe creer uno para ser salvo?</strong></li><li>Que Jesús fue acreditado por Dios.</li><li>Que Jesús resucitó físicamente de entre los muertos.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 2:37')">Hechos 2:37</div></div><div class="sc-body"><ul class="sc-pts"><li><strong>¿Qué significa sentirse "profundamente conmovido"?</strong></li><li>La gente reconoció su responsabilidad por la muerte de Jesús.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hechos 2:38-42')">Hechos 2:38-42</div></div><div class="sc-body"><ul class="sc-pts"><li><strong>Una vez que la gente creyó, ¿qué hicieron?</strong></li><li>Arrepentirse (volverse a Dios).</li><li>Ser bautizados (ser sumergidos en agua).</li><li>Sus pecados fueron perdonados. <strong>Este es el momento en que una persona es salva.</strong></li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Romanos 6:1-8')">Romanos 6:1-8</div></div><div class="sc-body"><ul class="sc-pts"><li>El bautismo es la participación en la muerte, sepultura y resurrección de Cristo.</li><li>Este es el momento en que somos liberados del pecado y unidos con Cristo.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Colosenses 2:11-12')">Colosenses 2:11-12</div></div><div class="sc-body"><ul class="sc-pts"><li>¿Qué activa el poder de Dios en el bautismo? ¡Nuestra fe!</li><li>Somos salvos por fe en el momento del bautismo.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 15:6-9')">Mateo 15:6-9 — Falsas doctrinas</div></div><div class="sc-body"><ul class="sc-pts"><li>Las falsas doctrinas a menudo surgen de la tradición religiosa.</li><li><strong style="color:#E8C98A;">Ejemplos:</strong> Bautismo de infantes, Orar a Jesús para que entre en tu corazón.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('1 Pedro 3:18-22')">1 Pedro 3:18-22</div></div><div class="sc-body"><ul class="sc-pts"><li>¿Qué representa el agua en este pasaje? El diluvio de Noé.</li><li>El bautismo "ahora los salva" — confirma que el bautismo no es meramente simbólico.</li></ul></div></div>
+<div class="sc-card reveal" style="border-color:rgba(201,169,110,0.35)"><div class="sc-refbar" style="background:rgba(201,169,110,0.12)"><div class="sc-ref">⚠️ Revisa tu Línea de Tiempo</div></div><div class="sc-body"><ul class="sc-pts"><li>¿Tu línea de tiempo espiritual se alinea con el proceso bíblico de salvación?</li><li>Si no, ¡ahora es el momento de arrepentirse y ser bautizado!</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">Responde con urgencia: ¡sé bautizado para el perdón de tus pecados!</p></div>`},
+{id:7,titulo:'La Cruz',icono:'✝️',color:'#8A5A5A',vid:'CkH7Rc42F98',desc:'Apreciando la muerte de Jesús en la Cruz y entendiendo por qué debemos odiar el pecado y amar la rectitud.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Odiar el pecado y amar a Dios porque apreciamos el sacrificio de Jesús.</p></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">La Pasión de Cristo — Parte Uno</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 26:31-68')">Mateo 26:31-68</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús predijo que todos sus discípulos lo abandonarían.</li><li class="q">¿Qué te haría dejar de seguir a Jesús?</li><li>Jesús no quería morir. Él eligió morir. Fue una lucha emocional.</li><li>Los discípulos de Jesús lo abandonaron.</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Tres Respuestas a la Cruz</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 26:69-75')">Mateo 26:69-75 — Pedro</div></div><div class="sc-body"><ul class="sc-pts"><li>Pedro niega a Jesús, tal como Jesús lo había profetizado.</li><li>El pecado de la <strong style="color:#F0EAD6;">cobardía</strong>.</li><li>Estaba quebrantado "a nivel del corazón" e incluso lloró amargamente.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 27:1-10')">Mateo 27:1-10 — Judas</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús es entregado a Pilato, el gobernador romano.</li><li>El pecado de la <strong style="color:#F0EAD6;">traición</strong>.</li><li>Judas cedió a su tristeza mundana y se quitó la vida.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 27:11-26')">Mateo 27:11-26 — Pilato</div></div><div class="sc-body"><ul class="sc-pts"><li>El pecado de la <strong style="color:#F0EAD6;">indecisión (omisión)</strong>.</li><li>Todos somos Barrabás y merecemos ser crucificados por nuestros pecados.</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">La Pasión — Parte Dos</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 27:27-56')">Mateo 27:27-56</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús fue crucificado a las 9 AM y permaneció en la Cruz durante seis horas.</li><li>En ese momento, Jesús tomó sobre sí los pecados de todo el mundo.</li><li class="q">¿Crees que Dios abandonó a Jesús en ese momento?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('2 Corintios 5:21')">2 Corintios 5:21</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús se hizo pecado en la Cruz por nosotros.</li><li>Su meta era que llegáramos a ser la justicia de Dios.</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">La Pasión — Parte Tres</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 27:62-66')">Mateo 27:62-66</div></div><div class="sc-body"><ul class="sc-pts"><li>Todos sabían exactamente dónde fue sepultado Jesús.</li><li>Soldados romanos aseguraron la tumba.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Mateo 28:1-10')">Mateo 28:1-10</div></div><div class="sc-body"><ul class="sc-pts"><li><strong style="color:#C9A96E;font-size:18px;">¡Jesús ha RESUCITADO!</strong></li><li>Él se aparece a sus discípulos y los anima.</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Nuestra Responsabilidad</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Isaías 53:4-6')">Isaías 53:4-6</div></div><div class="sc-body"><ul class="sc-pts"><li>Sustituye tu nombre en este pasaje.</li><li class="q">¿De verdad odias tu pecado por cómo lo hirió a Él?</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('1 Pedro 2:21-24')">1 Pedro 2:21-24</div></div><div class="sc-body"><ul class="sc-pts"><li>Jesús sufrió por cada uno de nosotros individualmente.</li><li>Debemos morir al pecado y vivir para la justicia.</li><li class="q">¿Cuál es el pecado más difícil que necesitas rendir?</li></ul></div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">Muere al pecado y vive para la justicia por gratitud hacia la Cruz.</p></div>`},
+{id:8,titulo:'La Iglesia',icono:'⛪',color:'#7A8A6E',vid:'GZfQziAruIQ',desc:'Un estudio informativo de la historia de la iglesia, examinando el desarrollo de varias denominaciones desde el primer siglo.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Adquirir una profunda convicción del plan eterno de Dios para la iglesia.</p></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt">Escrituras y Análisis</div><div class="sdiv"></div></div>
+<div class="sc-list">
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Colosenses 1:15-18')">Colosenses 1:15-18</div></div><div class="sc-body"><ul class="sc-pts"><li>La iglesia es el cuerpo de Cristo. Cristo es la cabeza del cuerpo.</li><li>No existe el concepto de cristianos en solitario.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Efesios 2:19-22')">Efesios 2:19-22</div></div><div class="sc-body"><ul class="sc-pts"><li>Antes éramos extraños para Cristo, pero ahora somos miembros de su familia.</li><li>La iglesia es la familia de Dios.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref">¿Qué sucede en el Bautismo?</div></div><div class="sc-body"><ul class="sc-pts"><li><strong><span class="sc-ref" onclick="openModal('1 Corintios 12:12-13')">1 Corintios 12:12-13</span></strong> — Todos somos bautizados en el cuerpo de Cristo.</li><li><strong><span class="sc-ref" onclick="openModal('Romanos 6:3-4')">Romanos 6:3-4</span></strong> — También somos bautizados en Cristo mismo.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('1 Corintios 1:10-13')">1 Corintios 1:10-13</div></div><div class="sc-body"><ul class="sc-pts"><li>No debe haber divisiones dentro de la iglesia.</li><li>La palabra "denominación" significa "un grupo bajo un nombre". Esto es antibíblico.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Efesios 4:4-6')">Efesios 4:4-6</div></div><div class="sc-body"><div class="sc-qm">"</div><p class="sc-verse">"4 Un cuerpo, y un Espíritu... 5 un Señor, una fe, un bautismo, 6 un Dios y Padre de todos."</p><ul class="sc-pts"><li>La Biblia enseña que solo hay un cuerpo de Cristo.</li><li>Dios ve una sola iglesia — todos los discípulos bautizados en todo el mundo.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('1 Corintios 12:14-27')">1 Corintios 12:14-27</div></div><div class="sc-body"><ul class="sc-pts"><li>Necesitamos que el cuerpo de Cristo esté activo en nuestras vidas.</li><li>Cada parte del cuerpo necesita a las demás.</li></ul></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref" onclick="openModal('Hebreos 10:23-25')">Hebreos 10:23-25</div></div><div class="sc-body"><ul class="sc-pts"><li>No debemos dejar de congregarnos.</li><li>La comunión nos ayuda a mantenernos firmes en nuestro compromiso.</li></ul></div></div>
+</div>
+<div class="facts-box reveal" style="margin-top:16px;"><h4>✦ Cinco Convicciones para Edificar la Iglesia</h4><ul><li>El sueño de evangelizar a todas las naciones en esta generación</li><li>El discipulado es un mandato de Dios — no es opcional</li><li>Un liderazgo central bajo un líder central</li><li>Una iglesia bíblica — no solo una iglesia del Nuevo Testamento</li><li>Hablar donde la Biblia guarda SILENCIO, y guarda silencio donde la Biblia habla</li></ul></div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">Comprométete a ser parte activa del cuerpo de Cristo.</p></div>`},
+{id:9,titulo:'Definiciones de Pecado',icono:'📜',color:'#8A7060',vid:'',desc:'Examinando las distintas definiciones bíblicas del pecado para comprenderlo en toda su profundidad.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Examinar las diferentes definiciones bíblicas del pecado para comprender en toda su dimensión qué es el pecado.</p></div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt"><span class="sc-ref" onclick="openModal('Gálatas 5:19-21')">Gálatas 5:19-21</span></div><div class="sdiv"></div></div>
+<div class="def-grid reveal" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px 24px 8px;">
+<div class="def-item"><div class="def-term">Inmoralidad Sexual <span class="def-greek">(porneía)</span></div><div class="def-desc">Cometer un acto sexual o cualquier pecado sexual fuera del matrimonio.</div></div>
+<div class="def-item"><div class="def-term">Impureza <span class="def-greek">(akatharsía)</span></div><div class="def-desc">Suciedad o inmundicia en un sentido natural o físico; inmundicia moral, lascivia.</div></div>
+<div class="def-item"><div class="def-term">Libertinaje <span class="def-greek">(asélgeia)</span></div><div class="def-desc">Falta de autocontrol que involucra el comportamiento de uno (excesos; comida, sueño, etc.).</div></div>
+<div class="def-item"><div class="def-term">Idolatría <span class="def-greek">(eidololatreía)</span></div><div class="def-desc">Adorar cualquier cosa que no sea Dios (carrera, escuela, placer, deportes).</div></div>
+<div class="def-item"><div class="def-term">Hechicería <span class="def-greek">(pharmakeía)</span></div><div class="def-desc">El ocultismo, la brujería, las drogas ilícitas, el trance, los encantamientos mágicos con drogas.</div></div>
+<div class="def-item"><div class="def-term">Odio <span class="def-greek">(échthra)</span></div><div class="def-desc">Ser hostil. Animosidad hacia los demás.</div></div>
+<div class="def-item"><div class="def-term">Discordia <span class="def-greek">(éris)</span></div><div class="def-desc">Rivalidad o falta de armonía entre personas.</div></div>
+<div class="def-item"><div class="def-term">Celos <span class="def-greek">(zelos)</span></div><div class="def-desc">Pena y deseo porque no tienes lo que otra persona tiene.</div></div>
+<div class="def-item"><div class="def-term">Arrebatos de ira <span class="def-greek">(thumós)</span></div><div class="def-desc">Un estado de intenso disgusto, enfado, ira, furia, indignación.</div></div>
+<div class="def-item"><div class="def-term">Ambición egoísta <span class="def-greek">(eritheía)</span></div><div class="def-desc">Conflicto y rivalidad por motivos egoístas.</div></div>
+<div class="def-item"><div class="def-term">Disensión <span class="def-greek">(dichostasía)</span></div><div class="def-desc">Una facción separada; división entre personas.</div></div>
+<div class="def-item"><div class="def-term">Facciones <span class="def-greek">(haíresis)</span></div><div class="def-desc">Crear una separación entre personas debido a una opinión diferente.</div></div>
+<div class="def-item"><div class="def-term">Envidia <span class="def-greek">(phthónos)</span></div><div class="def-desc">Dolor y amargura que se siente al ver la excelencia o la felicidad de otro.</div></div>
+<div class="def-item"><div class="def-term">Embriaguez <span class="def-greek">(méthe)</span></div><div class="def-desc">Ingesta excesiva de alcohol.</div></div>
+<div class="def-item"><div class="def-term">Orgías <span class="def-greek">(komos)</span></div><div class="def-desc">Vivir sin moderación. Festejar.</div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt"><span class="sc-ref" onclick="openModal('Marcos 7:20-22')">Marcos 7:20-22</span></div><div class="sdiv"></div></div>
+<div class="def-grid reveal" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px 24px 8px;">
+<div class="def-item"><div class="def-term">Robo <span class="def-greek">(klopé)</span></div><div class="def-desc">El acto de robar.</div></div>
+<div class="def-item"><div class="def-term">Homicidio <span class="def-greek">(phónos)</span></div><div class="def-desc">Matar a un ser humano.</div></div>
+<div class="def-item"><div class="def-term">Adulterio <span class="def-greek">(moicheía)</span></div><div class="def-desc">Sexo en el que al menos una persona está casada.</div></div>
+<div class="def-item"><div class="def-term">Engaño <span class="def-greek">(dólos)</span></div><div class="def-desc">Ocultación o distorsión de la verdad con el propósito de engañar a otros; fraude.</div></div>
+<div class="def-item"><div class="def-term">Lascivia <span class="def-greek">(asélgeia)</span></div><div class="def-desc">Ausencia de moderación; obsceno o indecente.</div></div>
+<div class="def-item"><div class="def-term">Arrogancia <span class="def-greek">(huperephanía)</span></div><div class="def-desc">Una exhibición ofensiva de la propia importancia.</div></div>
+<div class="def-item"><div class="def-term">Necedad <span class="def-greek">(aphrosúnee)</span></div><div class="def-desc">Falta de prudencia o buen juicio; tontería; falta de sentido.</div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt"><span class="sc-ref" onclick="openModal('Efesios 5:1-7')">Efesios 5:1-7</span></div><div class="sdiv"></div></div>
+<div class="def-grid reveal" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px 24px 8px;">
+<div class="def-item"><div class="def-term">Obscenidad <span class="def-greek">(aischrótes)</span></div><div class="def-desc">Comportamiento social o moralmente inapropiado o indecente.</div></div>
+<div class="def-item"><div class="def-term">Chistes groseros <span class="def-greek">(eutrapelía)</span></div><div class="def-desc">Chistes ofensivos o de mal gusto.</div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt"><span class="sc-ref" onclick="openModal('Colosenses 3:5-10')">Colosenses 3:5-10</span></div><div class="sdiv"></div></div>
+<div class="def-grid reveal" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px 24px 8px;">
+<div class="def-item"><div class="def-term">Avaricia <span class="def-greek">(pleonexía)</span></div><div class="def-desc">Deseo excesivo de lo que uno no tiene, especialmente riqueza o posesiones.</div></div>
+<div class="def-item"><div class="def-term">Maldad <span class="def-greek">(kakía)</span></div><div class="def-desc">El deseo de infligir lesión, daño o sufrimiento a otro.</div></div>
+<div class="def-item"><div class="def-term">Calumnia <span class="def-greek">(blasphemía)</span></div><div class="def-desc">Abuso verbal contra alguien. Herir la reputación de alguien.</div></div>
+<div class="def-item"><div class="def-term">Lenguaje sucio <span class="def-greek">(aischrología)</span></div><div class="def-desc">Discurso que generalmente se considera de mal gusto o con palabrotas.</div></div>
+<div class="def-item"><div class="def-term">Mentira <span class="def-greek">(pseúdomai)</span></div><div class="def-desc">Hablar falsamente o con engaño.</div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt"><span class="sc-ref" onclick="openModal('1 Corintios 6:7-10')">1 Corintios 6:7-10</span></div><div class="sdiv"></div></div>
+<div class="def-grid reveal" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px 24px 8px;">
+<div class="def-item"><div class="def-term">Hacer trampa <span class="def-greek">(adikéo)</span></div><div class="def-desc">Defraudar, estafar; quitarle a otros de manera deshonesta.</div></div>
+<div class="def-item"><div class="def-term">Homosexualidad <span class="def-greek">(arsenokoítes)</span></div><div class="def-desc">Relación íntima o sexual con el mismo género.</div></div>
+<div class="def-item"><div class="def-term">Robar <span class="def-greek">(kléptes)</span></div><div class="def-desc">Tomar algo que no te pertenece.</div></div>
+<div class="def-item"><div class="def-term">Estafar <span class="def-greek">(hárpax)</span></div><div class="def-desc">Engañar a una persona o empresa para robarle dinero u otros activos; obtener algo mediante fraude o engaño.</div></div>
+</div>
+<div class="slabel"><div class="slabel-ico">📖</div><div class="slabel-txt"><span class="sc-ref" onclick="openModal('2 Timoteo 3:1-5')">2 Timoteo 3:1-5</span> — Pecados del corazón</div><div class="sdiv"></div></div>
+<div class="def-grid reveal" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px 24px 8px;">
+<div class="def-item"><div class="def-term">Amantes de sí mismos <span class="def-greek">(phílautos)</span></div><div class="def-desc">Amor a uno mismo, egoísta.</div></div>
+<div class="def-item"><div class="def-term">Amantes del dinero <span class="def-greek">(philárguros)</span></div><div class="def-desc">Aficionado al dinero, codicioso.</div></div>
+<div class="def-item"><div class="def-term">Jactanciosos <span class="def-greek">(alázon)</span></div><div class="def-desc">Presumir.</div></div>
+<div class="def-item"><div class="def-term">Orgullosos <span class="def-greek">(huperephanos)</span></div><div class="def-desc">Ver arrogancia arriba en Marcos 7:20-22. Misma palabra griega.</div></div>
+<div class="def-item"><div class="def-term">Ofensivos <span class="def-greek">(blásphemos)</span></div><div class="def-desc">Lenguaje áspero o insultante; maltratar, especialmente físicamente.</div></div>
+<div class="def-item"><div class="def-term">Desobedientes a los padres <span class="def-greek">(apeithés)</span></div><div class="def-desc">Falta de voluntad para seguir las instrucciones de tus padres.</div></div>
+<div class="def-item"><div class="def-term">Ingratos <span class="def-greek">(acháristos)</span></div><div class="def-desc">Desagradecido. No apreciar. No reconocer o no demostrar gratitud.</div></div>
+<div class="def-item"><div class="def-term">Impíos <span class="def-greek">(anósios)</span></div><div class="def-desc">Estar en oposición a Dios o a lo que es sagrado.</div></div>
+<div class="def-item"><div class="def-term">Sin amor <span class="def-greek">(ástorgos)</span></div><div class="def-desc">De corazón duro; insensible; sin consideración por los demás.</div></div>
+<div class="def-item"><div class="def-term">Implacables <span class="def-greek">(áspondos)</span></div><div class="def-desc">No estar dispuesto a mostrar misericordia; irreconciliable.</div></div>
+<div class="def-item"><div class="def-term">Sin autocontrol <span class="def-greek">(akratés)</span></div><div class="def-desc">Incapaz de gobernar los propios deseos, con falta de moderación.</div></div>
+<div class="def-item"><div class="def-term">Brutales <span class="def-greek">(anemeros)</span></div><div class="def-desc">Salvaje.</div></div>
+<div class="def-item"><div class="def-term">No amantes de lo bueno <span class="def-greek">(aphilágathos)</span></div><div class="def-desc">Antipático, hostil. No mostrar compasión.</div></div>
+<div class="def-item"><div class="def-term">Traicioneros <span class="def-greek">(prodótes)</span></div><div class="def-desc">Traidor.</div></div>
+<div class="def-item"><div class="def-term">Temerarios <span class="def-greek">(propetés)</span></div><div class="def-desc">Imprudente, desconsiderado. Actuar antes de pensar o de buscar consejo y perspectiva.</div></div>
+<div class="def-item"><div class="def-term">Engreídos <span class="def-greek">(tuphóo)</span></div><div class="def-desc">Hincharse o inflarse de orgullo. Inflado.</div></div>
+<div class="def-item"><div class="def-term">Amantes del placer <span class="def-greek">(philedonos)</span></div><div class="def-desc">Amar el placer.</div></div>
+</div>
+<div class="facts-box reveal" style="margin-top:20px;"><h4>✦ Referencias</h4><ul><li>Las definiciones se derivaron de los siguientes diccionarios de palabras griegas: Spiros Zodhiates, <em>The Complete Word Study Dictionary: New Testament</em>.</li><li>William Arndt, Frederick W. Danker y Walter Bauer, <em>A Greek-English Lexicon of the New Testament</em>.</li></ul></div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Desafío de la Semana</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">⚡ Desafío</div><p class="challenge-t">Examina tu corazón y arrepiéntete de todo pecado que el Espíritu Santo te muestre.</p></div>`},
+{id:10,titulo:'Relato Médico de la Crucifixión',icono:'🩺',color:'#7A6060',vid:'',desc:'Un análisis médico del sufrimiento físico de Jesús en la Cruz para apreciar plenamente Su sacrificio.',html:`<div class="purpose"><div class="purpose-lbl">✦ Propósito</div><p class="purpose-txt">Comprender desde una perspectiva médica el increíble sufrimiento físico que Jesús experimentó en la Cruz.</p></div>
+<div class="facts-box reveal"><h4>✦ Un médico analiza la crucifixión</h4><ul><li><strong>Por el Dr. C. Truman Davis</strong> — Publicado originalmente en <em>Arizona Medicine</em>, marzo de 1965.</li></ul></div>
+<div class="slabel"><div class="slabel-ico">📜</div><div class="slabel-txt">Análisis Médico Completo</div><div class="sdiv"></div></div>
+<div class="sc-card reveal"><div class="sc-refbar"><div class="sc-ref">Introducción y contexto histórico</div></div><div class="sc-body"><div class="article-body"><p>Finalmente se me ocurrió que, aunque soy médico, ni siquiera conocía la causa inmediata de la muerte de Cristo.</p><p>La forma más común de cruz usada en los días de nuestro Señor era la <strong>cruz Tau</strong> (forma de T). El hombre condenado era obligado a llevar el patibulum (travesaño), que pesaba alrededor de 110 libras.</p></div></div></div>
+<div class="sc-card reveal" style="margin-top:16px;"><div class="sc-refbar"><div class="sc-ref">Getsemaní — El sudor de sangre (Hematidrosis)</div></div><div class="sc-body"><div class="article-body"><p>La pasión física de Cristo comenzó en Getsemaní. San Lucas, el médico, menciona el sudor de sangre.</p><p>Aunque es muy raro, el fenómeno de la <strong>hematidrosis</strong> está bien documentado médicamente. Bajo un gran estrés emocional, pequeños capilares en las glándulas sudoríparas pueden romperse, mezclando sangre con sudor.</p></div></div></div>
+<div class="sc-card reveal" style="margin-top:16px;"><div class="sc-refbar"><div class="sc-ref">Los azotes — La flagelación romana</div></div><div class="sc-body"><div class="article-body"><p>El legionario romano avanza con el <strong>flagrum</strong>: un látigo corto con varias correas de cuero pesadas y dos pequeñas bolas de plomo en cada extremo.</p><p>Después, los soldados le colocan una corona de espinas en el cuero cabelludo — una de las áreas más vascularizadas del cuerpo — produciendo un sangrado copioso.</p></div></div></div>
+<div class="sc-card reveal" style="margin-top:16px;"><div class="sc-refbar"><div class="sc-ref">La Crucifixión — El proceso físico</div></div><div class="sc-body"><div class="article-body"><p>Un clavo pesado de hierro forjado es clavado a través de la muñeca y profundamente en la madera.</p><p>A medida que se hunde lentamente, un dolor insoportable se dispara a lo largo de los dedos y sube por los brazos, ya que los clavos ejercen presión sobre los <strong>nervios medianos</strong>.</p></div></div></div>
+<div class="sc-card reveal" style="margin-top:16px;"><div class="sc-refbar"><div class="sc-ref">La muerte — Causa médica (<span class="sc-ref" onclick="openModal('Juan 19:34')">Juan 19:34</span>)</div></div><div class="sc-body"><div class="article-body"><p>Un terrible dolor aplastante en lo profundo del pecho, a medida que el <strong>pericardio</strong> se llena lentamente de suero y comienza a comprimir el corazón.</p><p>El legionario clavó su lanza a través del quinto espacio intercostal hacia el corazón. <span class="sc-ref" onclick="openModal('Juan 19:34')">Juan 19:34</span>: <em>"34 Pero uno de los soldados le abrió el costado con una lanza, y al instante salió sangre y agua"</em> — evidencia post-mortem de que nuestro Señor no murió de asfixia, sino de <strong>insuficiencia cardíaca</strong>.</p></div></div></div>
+<div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Reflexión Final</div><div class="sdiv"></div></div>
+<div class="challenge reveal"><div class="challenge-h">✝️ Reflexión</div><p class="challenge-t">Lee la narración de la crucifixión en <span class="sc-ref" onclick="openModal('Juan 19')">Juan 19</span> esta semana. Medita en cada detalle y permite que la realidad del sacrificio de Cristo cambie tu corazón para siempre.</p></div>`}
+];
+</script>
+</body>
+</html>
+
