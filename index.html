@@ -251,6 +251,8 @@ body.light .modal-header{background:#FFFFFF;}
 .swipe-hint.show{opacity:1;}
 .swipe-hint span{margin:0 8px;}
 
+.reading-progress{position:fixed;top:var(--hh);left:0;height:3px;background:var(--gold);width:0%;z-index:99;transition:width 0.1s ease;}
+
 </style>
 
 
@@ -259,6 +261,10 @@ body.light .modal-header{background:#FFFFFF;}
 </head>
 <body>
 <header>
+
+<div class="reading-progress" id="readProgress"></div>
+
+
 <div class="hbrand">
 <button class="menubtn" onclick="toggleSB()" aria-label="Menú"><span></span><span></span><span></span></button>
 <div class="hcross" onclick="go(-1)">✝</div>
@@ -820,6 +826,16 @@ setTimeout(function(){hint.classList.remove('show');setTimeout(function(){hint.r
 localStorage.setItem('swipe_hint_shown','true');
 }
 },3000);
+
+
+window.addEventListener('scroll', function(){
+var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+var scrolled = (winScroll / height) * 100;
+document.getElementById('readProgress').style.width = scrolled + '%';
+});
+
+
 
 
 
