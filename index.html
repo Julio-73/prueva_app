@@ -244,7 +244,18 @@ body.light .modal-content{background:#FFFFFF;}
 body.light .modal-header{background:#FFFFFF;}
 @media(max-width:768px){header{padding:0 14px;}.hprog{display:none;}.menubtn{display:flex;flex-direction:column;justify-content:center;align-items:center;}aside{transform:translateX(-100%);}aside.open{transform:translateX(0);}main{margin-left:0;width:100%;}.welcome{padding:24px 16px;}.w-cross{font-size:56px;}.w-h1{font-size:clamp(28px,8vw,40px);}.w-grid{grid-template-columns:1fr;gap:10px;}.hero{padding:28px 18px 32px;}.hero-line{left:18px;}.pbody{padding:22px 18px 44px;}.navfoot{padding:18px 14px 32px;gap:8px;flex-wrap:wrap;}.nbtn{padding:12px 12px;font-size:11px;flex:1;justify-content:center;}.ncenter{width:100%;order:-1;margin-bottom:10px;}.cbtn{padding:10px 16px;font-size:11px;}.pview.active{opacity:1 !important;visibility:visible !important;}main{opacity:1 !important;}.sb-item,.w-card,.nbtn,.cbtn,.sc-ref,.w-btn{-webkit-tap-highlight-color: rgba(212,175,55,0.3);}.sc-verse{font-size:16px;}.sc-pts li{font-size:15px;}.purpose-txt{font-size:16px;}.def-term{font-size:15px;}.def-desc{font-size:14px;}.article-body{font-size:16px;}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}}
+
+/* ═══════════════════════════════════════════════════════ SWIPE GESTURE ═══════════════════════════════════════════════════════ */
+.swipe-area{position:fixed;inset:0;z-index:1;pointer-events:none;}
+.swipe-hint{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(212,175,55,0.2);border:1px solid rgba(212,175,55,0.4);border-radius:30px;padding:8px 16px;font-size:12px;color:var(--gold);opacity:0;transition:opacity 0.3s ease;pointer-events:none;z-index:50;}
+.swipe-hint.show{opacity:1;}
+.swipe-hint span{margin:0 8px;}
+
 </style>
+
+
+
+
 </head>
 <body>
 <header>
@@ -766,9 +777,61 @@ var PP = [
 <div class="slabel"><div class="slabel-ico">🎯</div><div class="slabel-txt">Reflexión Final</div><div class="sdiv"></div></div>
 <div class="challenge reveal"><div class="challenge-h">✝️ Reflexión</div><p class="challenge-t">Lee la narración de la crucifixión en <span class="sc-ref" onclick="openModal('Juan 19')">Juan 19</span> esta semana. Medita en cada detalle y permite que la realidad del sacrificio de Cristo cambie tu corazón para siempre.</p></div>`}
 ];
+
+/* ═══════════════════════════════════════════════════════ SWIPE GESTURE ═══════════════════════════════════════════════════════ */
+var touchStartX=0,touchEndX=0,touchStartY=0,touchEndY=0,swipeThreshold=50;
+
+document.addEventListener('touchstart',function(e){
+touchStartX=e.changedTouches[0].screenX;
+touchStartY=e.changedTouches[0].screenY;
+},false);
+
+document.addEventListener('touchend',function(e){
+touchEndX=e.changedTouches[0].screenX;
+touchEndY=e.changedTouches[0].screenY;
+handleSwipe();
+},false);
+
+function handleSwipe(){
+var diffX=touchEndX-touchStartX;
+var diffY=touchEndY-touchStartY;
+
+// Solo detectar swipe horizontal (no vertical scroll)
+if(Math.abs(diffX)>Math.abs(diffY)&&Math.abs(diffX)>swipeThreshold){
+if(diffX<0){
+// Swipe izquierda → Siguiente
+if(S.cur<PP.length-1){go(S.cur+1);}
+}else{
+// Swipe derecha → Anterior
+if(S.cur>0){go(S.cur-1);}
+}
+}
+}
+
+// Mostrar pista de swipe la primera vez
+setTimeout(function(){
+if(!localStorage.getItem('swipe_hint_shown')){
+var hint=document.createElement('div');
+hint.className='swipe-hint';
+hint.innerHTML='<span>👈</span> Desliza para navegar <span>👉</span>';
+document.body.appendChild(hint);
+setTimeout(function(){hint.classList.add('show');},500);
+setTimeout(function(){hint.classList.remove('show');setTimeout(function(){hint.remove();},300);},4000);
+localStorage.setItem('swipe_hint_shown','true');
+}
+},3000);
+
+
+
 </script>
 </body>
+
 </html>
+
+
+
+
+
 
 
 
