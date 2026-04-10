@@ -1,0 +1,14 @@
+{
+  "name": "Principios Básicos de la Biblia",
+  "short_name": "Principios Bíblicos",
+  "description": "Curso de 10 principios fundamentales para conocer a Dios y crecer en la fe cristiana.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0D0D0F",
+  "theme_color": "#0D0D0F",
+  "orientation": "portrait-primary",
+  "categories": ["education", "reference"],
+  "lang": "es",
+  "dir": "ltr"
+}
+

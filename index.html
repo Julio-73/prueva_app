@@ -15,6 +15,10 @@
 <title>Principios Básicos — Iglesias Cristianas Internacionales</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="manifest" href="./manifest.json">
+
+
 <!-- Fuentes: Playfair Display (Títulos) y Lato (Texto legible sin cursiva) -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
@@ -986,6 +990,23 @@ document.getElementById('searchBar').style.display = 'none';
 }
 });
 
+
+
+/* ═══════════════════════════════════════════════════════ REGISTRAR SERVICE WORKER ═══════════════════════════════════════════════════════ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js')
+      .then(function(registration) {
+        console.log('Service Worker registrado:', registration.scope);
+      })
+      .catch(function(error) {
+        console.log('Error al registrar Service Worker:', error);
+      });
+  });
+}
+
+/* ═══════════════════════════════════════════════════════ LINK AL MANIFEST ═══════════════════════════════════════════════════════ */
+// Agrega esto en el <head>: <link rel="manifest" href="./manifest.json">
 
 
 
